@@ -1,0 +1,562 @@
+[
+  {
+    "name": "The Entrepreneur's Guide to Success",
+    "category": "Business"
+  },
+  {
+    "name": "The Art of Negotiation Mastery",
+    "category": "Business"
+  },
+  {
+    "name": "The Innovator's Path to Prosperity",
+    "category": "Business"
+  },
+  {
+    "name": "The Leadership Code: Unleashing Your Potential",
+    "category": "Business"
+  },
+  {
+    "name": "The Strategic Mindset: Achieving Business Excellence",
+    "category": "Business"
+  },
+  {
+    "name": "The Financial Wizard's Handbook",
+    "category": "Business"
+  },
+  {
+    "name": "The Marketing Maestro's Secrets",
+    "category": "Business"
+  },
+  {
+    "name": "The Entrepreneurial Edge: Building a Thriving Business",
+    "category": "Business"
+  },
+  {
+    "name": "The Business Mastery Blueprint",
+    "category": "Business"
+  },
+  {
+    "name": "The Corporate Trailblazer's Guide to Success",
+    "category": "Business"
+  },
+  {
+    "name": "The Wealth Accumulation Formula",
+    "category": "Business"
+  },
+  {
+    "name": "The Business Revolution: Embracing Change for Growth",
+    "category": "Business"
+  },
+  {
+    "name": "The Investor's Handbook: Navigating the Financial Markets",
+    "category": "Business"
+  },
+  {
+    "name": "The Entrepreneurial Spirit: Igniting Your Business Passion",
+    "category": "Business"
+  },
+  {
+    "name": "The Business Leader's Code of Ethics",
+    "category": "Business"
+  },
+  {
+    "name": "The Strategic Visionary: Shaping the Future of Business",
+    "category": "Business"
+  },
+  {
+    "name": "The Financial Freedom Formula",
+    "category": "Business"
+  },
+  {
+    "name": "The Marketing Maverick's Playbook",
+    "category": "Business"
+  },
+  {
+    "name": "The Corporate Culture Catalyst",
+    "category": "Business"
+  },
+  {
+    "name": "The Global Business Navigator's Guide",
+    "category": "Business"
+  },
+  {
+    "name": "The Crystal Kingdom Chronicles",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Phoenix's Quest",
+    "category": "Fantasy"
+  },
+  {
+    "name": "Legends of the Mystic Forest",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Enchanted Isles of Eldoria",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Dragon's Song of Destiny",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Sorcerer's Secret Library",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Unicorn's Whispering Woods",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Mage's Enigma",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Faerie's Tale of Enchantment",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Kingdom of Eternal Dreams",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Enchanted Quest for the Lost Artefact",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Magical Chronicles of Eldoria",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Phoenix's Flight to Freedom",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Enchanted Kingdom of Legends",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Dragon's Lair of Mysteries",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Sorceress's Spellbinding Secrets",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Unicorn's Dance of Destiny",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Mage's Quest for the Crystal Staff",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Faerie's Flight to Enchantment",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Kingdom of Everlasting Enchantment",
+    "category": "Fantasy"
+  },
+  {
+    "name": "The Quest for the Lost Treasure",
+    "category": "Adventure"
+  },
+  {
+    "name": "The Secret Island Expedition",
+    "category": "Adventure"
+  },
+  {
+    "name": "The Legendary Explorer's Journal",
+    "category": "Adventure"
+  },
+  {
+    "name": "The Enchanted Forest Chronicles",
+    "category": "Adventure"
+  },
+  {
+    "name": "The Pirate's Curse: A High Seas Adventure",
+    "category": "Adventure"
+  },
+  {
+    "name": "The Mysterious Mountain Quest",
+    "category": "Adventure"
+  },
+  {
+    "name": "The Forbidden Temple Adventure",
+    "category": "Adventure"
+  },
+  {
+    "name": "The Great Safari Expedition",
+    "category": "Adventure"
+  },
+  {
+    "name": "The Lost City Chronicles",
+    "category": "Adventure"
+  },
+  {
+    "name": "The Epic Journey to the Unknown",
+    "category": "Adventure"
+  },
+  {
+    "name": "The Haunting of Blackwood Manor",
+    "category": "Thriller"
+  },
+  {
+    "name": "The Midnight Stalker",
+    "category": "Thriller"
+  },
+  {
+    "name": "The Terror in Ravenwood Forest",
+    "category": "Thriller"
+  },
+  {
+    "name": "The Dark Secrets of Hollow Hill",
+    "category": "Thriller"
+  },
+  {
+    "name": "The Chilling Whispers in the Attic",
+    "category": "Thriller"
+  },
+  {
+    "name": "The Shadowy Figure on Elm Street",
+    "category": "Thriller"
+  },
+  {
+    "name": "The Mysterious Disappearances of Millbrook Village",
+    "category": "Thriller"
+  },
+  {
+    "name": "The Sinister Secrets of Whispering Pines",
+    "category": "Thriller"
+  },
+  {
+    "name": "The Haunted Lighthouse on Deadman's Reef",
+    "category": "Thriller"
+  },
+  {
+    "name": "The Phantom of Blackwater Bay",
+    "category": "Thriller"
+  },
+  {
+    "name": "The Galactic Chronicles of Andromeda",
+    "category": "Sci-Fi"
+  },
+  {
+    "name": "The Quantum Adventures in Parallel Universes",
+    "category": "Sci-Fi"
+  },
+  {
+    "name": "The Cybernetic Revolution on Mars",
+    "category": "Sci-Fi"
+  },
+  {
+    "name": "The Interstellar Journeys Beyond the Milky Way",
+    "category": "Sci-Fi"
+  },
+  {
+    "name": "The Extraterrestrial Encounters in Alpha Centauri",
+    "category": "Sci-Fi"
+  },
+  {
+    "name": "The Time Traveler's Dilemma in the 25th Century",
+    "category": "Sci-Fi"
+  },
+  {
+    "name": "The Robotic Uprising in the Orion Nebula",
+    "category": "Sci-Fi"
+  },
+  {
+    "name": "The Genetic Engineering Experiments on Europa",
+    "category": "Sci-Fi"
+  },
+  {
+    "name": "The Artificial Intelligence Revolution in Deep Space",
+    "category": "Sci-Fi"
+  },
+  {
+    "name": "The Alien Invasion of New Terra Prime",
+    "category": "Sci-Fi"
+  },
+  {
+    "name": "The Mind's Abyss: Exploring the Depths of Consciousness",
+    "category": "Psychology"
+  },
+  {
+    "name": "The Emotion Experiment: Understanding the Power of Feelings",
+    "category": "Psychology"
+  },
+  {
+    "name": "The Subconscious Symphony: Unraveling the Mysteries of the Unconscious Mind",
+    "category": "Psychology"
+  },
+  {
+    "name": "The Cognitive Chronicles: Navigating the Complexities of Thought",
+    "category": "Psychology"
+  },
+  {
+    "name": "The Behavior Blueprint: Decoding the Patterns of Human Actions",
+    "category": "Psychology"
+  },
+  {
+    "name": "The Mental Mirage: Illusions and Realities in the Mind",
+    "category": "Psychology"
+  },
+  {
+    "name": "The Personality Puzzle: Understanding the Unique Traits of Individuals",
+    "category": "Psychology"
+  },
+  {
+    "name": "The Motivation Manifesto: Uncovering the Driving Forces of Human Behavior",
+    "category": "Psychology"
+  },
+  {
+    "name": "The Social Psychology Saga: Exploring the Dynamics of Human Interaction",
+    "category": "Psychology"
+  },
+  {
+    "name": "The Therapeutic Tales: Stories of Healing and Transformation",
+    "category": "Psychology"
+  },
+  {
+    "name": "The Haunting of Hollow Hill",
+    "category": "Horror"
+  },
+  {
+    "name": "Whispers in the Dark: Tales of Terror",
+    "category": "Horror"
+  },
+  {
+    "name": "The Phantom's Fury: Haunted Histories",
+    "category": "Horror"
+  },
+  {
+    "name": "Cursed Crypt: Nightmares Unearthed",
+    "category": "Horror"
+  },
+  {
+    "name": "The Shadow Stalker: Dreadful Encounters",
+    "category": "Horror"
+  },
+  {
+    "name": "Eerie Echoes: Ghostly Whispers",
+    "category": "Horror"
+  },
+  {
+    "name": "The Wicked Woods: Sinister Secrets",
+    "category": "Horror"
+  },
+  {
+    "name": "Terror in the Twilight: Chilling Chronicles",
+    "category": "Horror"
+  },
+  {
+    "name": "Phantom Phobia: Fearful Fables",
+    "category": "Horror"
+  },
+  {
+    "name": "The Haunted House: Terrifying Tales",
+    "category": "Horror"
+  },
+  {
+    "name": "Lost Kingdoms: Forgotten Empires",
+    "category": "History"
+  },
+  {
+    "name": "Ancient Mysteries: Unraveling the Past",
+    "category": "History"
+  },
+  {
+    "name": "Warrior Queens: Untold Legends",
+    "category": "History"
+  },
+  {
+    "name": "Legends of the Nile: Mythical Tales",
+    "category": "History"
+  },
+  {
+    "name": "Empires of the East: Forgotten Dynasties",
+    "category": "History"
+  },
+  {
+    "name": "Explorers and Conquerors: Epic Journeys",
+    "category": "History"
+  },
+  {
+    "name": "Secrets of the Samurai: Ancient Warriors",
+    "category": "History"
+  },
+  {
+    "name": "Tales of Troy: Legendary Heroes",
+    "category": "History"
+  },
+  {
+    "name": "The Silk Road: Trade and Treasures",
+    "category": "History"
+  },
+  {
+    "name": "Lost Civilizations: Vanished Worlds",
+    "category": "History"
+  },
+  {
+    "name": "Mysteries of the Deep: Unexplored Depths",
+    "category": "Documentary"
+  },
+  {
+    "name": "Secrets of the Cosmos: Unknown Realms",
+    "category": "Documentary"
+  },
+  {
+    "name": "Lost Civilizations: Forgotten Worlds",
+    "category": "Documentary"
+  },
+  {
+    "name": "Journeys of Discovery: Uncharted Territories",
+    "category": "Documentary"
+  },
+  {
+    "name": "Legends of the Amazon: Mythical Creatures",
+    "category": "Documentary"
+  },
+  {
+    "name": "Explorers' Tales: Epic Adventures",
+    "category": "Documentary"
+  },
+  {
+    "name": "Enigmas of History: Unsolved Mysteries",
+    "category": "Documentary"
+  },
+  {
+    "name": "Chronicles of the Unknown: Mysterious Phenomena",
+    "category": "Documentary"
+  },
+  {
+    "name": "Beyond the Horizon: Unexplored Frontiers",
+    "category": "Documentary"
+  },
+  {
+    "name": "Untold Stories: Forgotten Narratives",
+    "category": "Documentary"
+  },
+  {
+    "name": "The Case of the Vanishing Heiress",
+    "category": "Detective"
+  },
+  {
+    "name": "Murder at Midnight Manor",
+    "category": "Detective"
+  },
+  {
+    "name": "The Mystery of the Stolen Sapphire",
+    "category": "Detective"
+  },
+  {
+    "name": "The Secret of the Silent Witness",
+    "category": "Detective"
+  },
+  {
+    "name": "The Enigma of the Elusive Assassin",
+    "category": "Detective"
+  },
+  {
+    "name": "The Puzzle of the Poisoned Pen",
+    "category": "Detective"
+  },
+  {
+    "name": "The Riddle of the Missing Relic",
+    "category": "Detective"
+  },
+  {
+    "name": "The Clue in the Cobweb Castle",
+    "category": "Detective"
+  },
+  {
+    "name": "The Intrigue of the Invisible Intruder",
+    "category": "Detective"
+  },
+  {
+    "name": "The Secret Code of the Cryptic Conundrum",
+    "category": "Detective"
+  },
+  {
+    "name": "Love in the Moonlight",
+    "category": "Romance"
+  },
+  {
+    "name": "Whispers of the Heart",
+    "category": "Romance"
+  },
+  {
+    "name": "Forever and Always",
+    "category": "Romance"
+  },
+  {
+    "name": "The Secret Garden of Love",
+    "category": "Romance"
+  },
+  {
+    "name": "Sunset Serenade",
+    "category": "Romance"
+  },
+  {
+    "name": "Eternal Embrace",
+    "category": "Romance"
+  },
+  {
+    "name": "Heartstrings and Harmony",
+    "category": "Romance"
+  },
+  {
+    "name": "Passion's Promise",
+    "category": "Romance"
+  },
+  {
+    "name": "Love's Lullaby",
+    "category": "Romance"
+  },
+  {
+    "name": "In the Arms of Love",
+    "category": "Romance"
+  },
+  {
+    "name": "Uncovering the Truth: A Journey Through History",
+    "category": "Nonfiction"
+  },
+  {
+    "name": "Exploring the Depths: The Science of the Ocean",
+    "category": "Nonfiction"
+  },
+  {
+    "name": "Beyond the Stars: The Mysteries of the Universe",
+    "category": "Nonfiction"
+  },
+  {
+    "name": "Unraveling the Mind: Psychology and Human Behavior",
+    "category": "Nonfiction"
+  },
+  {
+    "name": "The Art of Healing: Traditional Medicine Around the World",
+    "category": "Nonfiction"
+  },
+  {
+    "name": "Voices of Change: Stories of Social Justice Movements",
+    "category": "Nonfiction"
+  },
+  {
+    "name": "Innovation Nation: The Evolution of Technology",
+    "category": "Nonfiction"
+  },
+  {
+    "name": "The Power of Words: A History of Literature and Language",
+    "category": "Nonfiction"
+  },
+  {
+    "name": "Unseen Wonders: Exploring the Beauty of Nature",
+    "category": "Nonfiction"
+  },
+  {
+    "name": "Chasing Dreams: Inspirational Stories of Success",
+    "category": "Nonfiction"
+  }
+]

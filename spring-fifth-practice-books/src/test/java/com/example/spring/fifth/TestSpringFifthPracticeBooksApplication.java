@@ -24,7 +24,7 @@ public class TestSpringFifthPracticeBooksApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.from(SpringFifthPracticeBooksApplication::main).with(TestSpringFifthPracticeBooksApplication.class).run(args);
+		SpringApplication.from(Application::main).with(TestSpringFifthPracticeBooksApplication.class).run(args);
 	}
 
 }
