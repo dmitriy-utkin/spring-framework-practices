@@ -1,0 +1,36 @@
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:prod}
+
+app:
+  listening:
+    enable: ${APP_LISTENING_ENABLE:true}
+
+  uploading:
+    enable: ${APP_UPLOADING_ENABLE:true}
+    path: ${APP_UPLOADING_PATH:src/main/resources/students_mock.csv}
+
+  strings:
+    messagePrefix: -->
+    saveMessageFormat: '{0} Student (first name: {1} , last name: {2}) was saved'
+    successStudentRemovingFormat: '{0} Student with id {1} was removed'
+    unsuccessfulStudentRemovingFormat: '{0} Student with id {1} wis not exist'
+    removingAllStudentsFormat: '{0} Student list was cleared'
+    emptyListFormat: '{0} Student list is empty'
+    wrongInputAgeFormat: '{0} Student age should be between {1} and {2}, try again'
+    alreadyExistedStudentFormat: '{0} Student with full name {1} {2} already existed'
+    uploadingMessageFormat: '--> Uploaded student list from external source: {0}'
+
+    listenerOnLaunchMessage: '--> LISTENER: Application was launched. To get a help, write "help" on console'
+    listenerOnAddingMessageFormat: '--> LISTENER: Was added a new student with id {0}'
+    listenerOnRemovingMessageFormat: '--> LISTENER: Removing: {0}, id {1}'
+    listenerOnUploadingMessageFormat: '--> LISTENER: Uploading student list from external source: {0}'
+    listenerOnRemovingAllMessageFormat: '--> LISTENER: Was removed all students, total size: {0}'
+    listenerOnPrintingMessageFormat: '--> LISTENER: Was printed student list, total size: {0}'
+
+  validation:
+    minAge: 16
+    maxAge: 100
+
+
+

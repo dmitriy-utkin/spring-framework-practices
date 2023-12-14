@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact form</title>
+  <link th:href="@{/css/form.css}" rel="stylesheet">
+</head>
+<body>
+
+<h1 th:if="${form eq 'create'}">Create form</h1>
+<h1 th:if="${form eq 'edit'}">Edit form</h1>
+
+<!--<form th:if="${form eq 'create'}" action="/contacts/save" method="post">-->
+<form action="/contacts/save" method="post">
+
+  <input th:if="${form eq 'edit'}" type="hidden" name="id" th:value="${contact.id}">
+  <div>
+    <label for="firstName">First name:</label>
+    <input type="text" id="firstName" name="firstName" required th:value="${contact.firstName}">
+  </div>
+  <div>
+    <label for="lastName">Last name:</label>
+    <input type="text" id="lastName" name="lastName" required th:value="${contact.lastName}">
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" required th:value="${contact.email}">
+  </div>
+  <div>
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" name="phone" required th:value="${contact.phone}">
+  </div>
+  <button type="submit">Save</button>
+</form>
+
+</body>
+</html>

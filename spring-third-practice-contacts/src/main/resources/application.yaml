@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:default}
+
+  datasource:
+    url: ${PSQL_URL:jdbc:postgresql://localhost:5432/contacts}
+    username: ${PSQL_USER:postgres}
+    password: ${PSQL_PASS:postgres}
+    hikari:
+      schema: ${PSQL_SCHEMA:contacts_schema}
+
+app:
+  input:
+    enable: ${APP_UPLOADING_ENABLE:true}
+    numberOfGenericContacts: ${DEFAULT_NUMBER_GEN_CONTACT:10}
+    emailPath: src/main/resources/emails.csv
+    firstNamePath: src/main/resources/first-names.csv
+    lastNamePath: src/main/resources/last-names.csv
+    phonePath: src/main/resources/phones.csv

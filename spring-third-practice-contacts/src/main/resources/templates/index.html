@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact book</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/form.css}" rel="stylesheet">
+</head>
+
+<body>
+<h1>Contact book</h1>
+<div>
+    <a th:href="@{/contacts/create}">Add new contact</a>
+</div>
+<br>
+<div>
+    <form th:action="@{/contacts/generic}" method="get">
+        <div>
+            <label for="count">Create generic contact: </label>
+            <input type="number" id="count" name="count" required>
+            <button type="submit">Run</button>
+        </div>
+    </form>
+</div>
+<br>
+<div>
+    <a th:href="@{/contacts/deleteAll}">Delete all contacts in the book</a>
+</div>
+<br>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Phone number</th>
+        <th>Additional features</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="contact : ${contacts}">
+        <td th:text="${contact.id}"></td>
+        <td th:text="${contact.firstName}"></td>
+        <td th:text="${contact.lastName}"></td>
+        <td th:text="${contact.email}"></td>
+        <td th:text="${contact.phone}"></td>
+        <td>
+            <a th:href="@{/contacts/edit/{id}(id=${contact.id})}">Edit</a>
+            <a th:href="@{/contacts/delete/{id}(id=${contact.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+
+</body>
+
+</html>
