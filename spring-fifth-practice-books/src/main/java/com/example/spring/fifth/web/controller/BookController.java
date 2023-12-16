@@ -7,6 +7,7 @@ import com.example.spring.fifth.web.model.book.BookListResponse;
 import com.example.spring.fifth.web.model.book.BookResponse;
 import com.example.spring.fifth.web.model.book.UpsertBookRequest;
 import com.example.spring.fifth.web.model.defaults.FindAllSettings;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,20 +24,24 @@ public class BookController {
 
     @GetMapping("/category/{name}")
     public ResponseEntity<BookListResponse> findBooksByCategoryName(@PathVariable("name") String categoryName) {
+
+        FindAllSettings findAllSettings = FindAllSettings.builder()
+                .pageNum(0)
+                .pageSize(Math.toIntExact(bookService.count()))
+                .filter(BookFilter.builder().categoryName(categoryName).build())
+                .build();
         return ResponseEntity.ok(
                 bookMapper.bookListToBookListResponse(
-                        bookService.findAll(FindAllSettings.builder()
-                                .filter(BookFilter.builder().categoryName(categoryName).build())
-                                .build())
+                        bookService.findAll(findAllSettings)
                 )
         );
     }
 
     @GetMapping
-    public ResponseEntity<BookListResponse> findAll(@RequestBody FindAllSettings settings) {
+    public ResponseEntity<BookListResponse> findAll(@RequestBody FindAllSettings findAllSettings) {
         return ResponseEntity.ok(
                 bookMapper.bookListToBookListResponse(
-                        bookService.findAll(settings)
+                        bookService.findAll(findAllSettings)
                 )
         );
     }

@@ -9,13 +9,13 @@ import java.util.Locale;
 
 public interface BookSpecification {
 
-    static Specification<Book> withFilter(BookFilter filter) {
-        return Specification.where(byBookName(filter.getBookName()))
-                .and(byCategoryName(filter.getCategoryName()))
-                .and(byCategoryId(filter.getCategoryId()));
+    static Specification<Book> withFilter(BookFilter bookFilter) {
+        return Specification.where(byBookName(bookFilter.getBookName()))
+                .and(byCategoryName(bookFilter.getCategoryName()))
+                .and(byCategoryId(bookFilter.getCategoryId()));
     }
 
-    static Specification<Book> byCategoryId(Integer categoryId) {
+    static Specification<Book> byCategoryId(Long categoryId) {
         return (root, query, cb) -> {
             if (categoryId == null) {
                 return null;

@@ -5,20 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldNameConstants;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@FieldNameConstants
 public class FindAllSettings {
 
     @Builder.Default
-    private int pageSize = 15;
+    private Integer pageSize = 20;
 
     @Builder.Default
-    private int pageNum = 0;
+    private Integer pageNum = 0;
 
     @Builder.Default
     private BookFilter filter = new BookFilter();

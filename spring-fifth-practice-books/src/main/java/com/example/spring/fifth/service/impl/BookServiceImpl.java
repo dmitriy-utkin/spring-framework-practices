@@ -6,6 +6,7 @@ import com.example.spring.fifth.repository.BookRepository;
 import com.example.spring.fifth.repository.BookSpecification;
 import com.example.spring.fifth.service.BookService;
 import com.example.spring.fifth.utils.EntityUtil;
+import com.example.spring.fifth.web.model.book.BookFilter;
 import com.example.spring.fifth.web.model.defaults.FindAllSettings;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -20,9 +21,9 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
 
     @Override
-    public List<Book> findAll(FindAllSettings settings) {
-        return bookRepository.findAll(BookSpecification.withFilter(settings.getFilter()),
-                PageRequest.of(settings.getPageNum(), settings.getPageSize())).getContent();
+    public List<Book> findAll(FindAllSettings findAllSettings) {
+        return bookRepository.findAll(BookSpecification.withFilter(findAllSettings.getFilter()),
+                PageRequest.of(findAllSettings.getPageNum(), findAllSettings.getPageSize())).getContent();
     }
 
     @Override
@@ -60,4 +61,5 @@ public class BookServiceImpl implements BookService {
     public Long count() {
         return bookRepository.count();
     }
+
 }
