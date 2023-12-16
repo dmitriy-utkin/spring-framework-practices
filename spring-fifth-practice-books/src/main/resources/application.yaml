@@ -14,3 +14,4 @@ app:
   upload:
     enable: true
     dataPath: src/main/resources/data/books-mock-data.json
+    defaultBooksNumber: 20

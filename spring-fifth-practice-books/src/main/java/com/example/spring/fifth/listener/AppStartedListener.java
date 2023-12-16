@@ -42,6 +42,21 @@ public class AppStartedListener {
             Book book = Book.builder().category(category).name(b.getName()).build();
             savedBooks.add(bookService.createBook(book));
         });
-        log.info("Was saved {} books on staring the application", savedBooks.size());
+        int defaultBooksNum = createDefaultBooks();
+        log.info("Was saved {} generic books and {} default books", savedBooks.size(), defaultBooksNum);
+    }
+
+    private int createDefaultBooks() {
+        int bookNumber = uploadConfig.getDefaultBooksNumber();
+        Category category = categoryService.saveOrGetIfExists(Category.builder().name("default").build());
+        List<Book> savedDefaultBooks = new ArrayList<>();
+        for (int i = 1; i <= bookNumber; i++) {
+            savedDefaultBooks.add(bookService.createBook(Book.builder()
+                            .name("Book_" + i)
+                            .category(category)
+                    .build()));
+        }
+
+        return savedDefaultBooks.size();
     }
 }

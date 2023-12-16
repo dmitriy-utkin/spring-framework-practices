@@ -11,4 +11,5 @@ public class UploadConfig {
 
     private boolean enable;
     private String dataPath;
+    private int defaultBooksNumber;
 }

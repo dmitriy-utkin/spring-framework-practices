@@ -5,6 +5,8 @@ import com.example.spring.fifth.model.Category;
 import com.example.spring.fifth.web.model.book.BookFilter;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.Locale;
+
 public interface BookSpecification {
 
     static Specification<Book> withFilter(BookFilter filter) {
@@ -27,7 +29,8 @@ public interface BookSpecification {
             if (categoryName == null) {
                 return null;
             }
-            return cb.equal(root.get(Book.Fields.category).get(Category.Fields.name), categoryName);
+            return cb.equal(root.get(Book.Fields.category).get(Category.Fields.name),
+                    categoryName.toLowerCase(Locale.ROOT));
         };
     }
 
