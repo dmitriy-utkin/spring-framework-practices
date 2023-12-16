@@ -1,1 +1,16 @@
+spring:
+  jpa:
+    generate-ddl: true
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/books_db
+    username: postgres
+    password: postgres
+    hikari:
+      schema: books_schema
+      connection-timeout: 10000
 
+app:
+  upload:
+    enable: true
+    dataPath: src/main/resources/data/books-mock-data.json
