@@ -2,12 +2,10 @@ package com.example.spring.fifth.web.controller;
 
 import com.example.spring.fifth.mapper.BookMapper;
 import com.example.spring.fifth.service.BookService;
-import com.example.spring.fifth.web.model.book.BookFilter;
 import com.example.spring.fifth.web.model.book.BookListResponse;
 import com.example.spring.fifth.web.model.book.BookResponse;
 import com.example.spring.fifth.web.model.book.UpsertBookRequest;
 import com.example.spring.fifth.web.model.defaults.FindAllSettings;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,17 +20,21 @@ public class BookController {
 
     private final BookService bookService;
 
-    @GetMapping("/category/{name}")
-    public ResponseEntity<BookListResponse> findBooksByCategoryName(@PathVariable("name") String categoryName) {
-
-        FindAllSettings findAllSettings = FindAllSettings.builder()
-                .pageNum(0)
-                .pageSize(Math.toIntExact(bookService.count()))
-                .filter(BookFilter.builder().categoryName(categoryName).build())
-                .build();
+    @GetMapping("/search/category")
+    public ResponseEntity<BookListResponse> searchBookByCategory(@RequestParam("category") String category) {
         return ResponseEntity.ok(
                 bookMapper.bookListToBookListResponse(
-                        bookService.findAll(findAllSettings)
+                        bookService.findByCategory(category)
+                )
+        );
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<BookResponse> findBookByBookNameAndAuthor(@RequestParam("name") String name,
+                                                                    @RequestParam("author") String author) {
+        return ResponseEntity.ok(
+                bookMapper.bookToBookResponse(
+                        bookService.findByNameAndAuthor(name, author)
                 )
         );
     }

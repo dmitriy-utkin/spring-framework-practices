@@ -16,4 +16,6 @@ public class BookFilter {
     private String categoryName;
 
     private Long categoryId;
+
+    private String author;
 }

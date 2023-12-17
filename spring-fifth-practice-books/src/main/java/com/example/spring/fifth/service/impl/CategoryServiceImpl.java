@@ -16,6 +16,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category saveOrGetIfExists(Category category) {
+        if (category == null) {
+            return null;
+        }
         category.setName(category.getName().toLowerCase(Locale.ROOT));
         return categoryRepository.existsByName(category.getName()) ?
                 findByName(category.getName()) : create(category);

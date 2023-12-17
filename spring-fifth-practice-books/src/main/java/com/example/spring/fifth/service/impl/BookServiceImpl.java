@@ -62,4 +62,17 @@ public class BookServiceImpl implements BookService {
         return bookRepository.count();
     }
 
+    @Override
+    public List<Book> findByCategory(String category) {
+        BookFilter bookFilter = BookFilter.builder().categoryName(category).build();
+        return bookRepository.findAll(BookSpecification.withFilter(bookFilter));
+    }
+
+    @Override
+    public Book findByNameAndAuthor(String name, String author) {
+        return bookRepository.findByNameAndAuthor(name, author).orElseThrow(
+                () -> new EntityNotFoundException("Book with author " + author +
+                        " and name " + name + " not found.")
+        );
+    }
 }

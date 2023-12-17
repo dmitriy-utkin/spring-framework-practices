@@ -43,7 +43,7 @@ public class AppStartedListener {
             Book book = Book.builder().author(author).category(category).name(b.getName()).build();
             savedBooks.add(bookService.createBook(book));
         });
-        int defaultBooksNum = createDefaultBooks();
+        int defaultBooksNum = createDefaultBooks(authors);
         log.info("Was saved {} generic books and {} default books", savedBooks.size(), defaultBooksNum);
     }
 
@@ -55,12 +55,14 @@ public class AppStartedListener {
         return authors;
     }
 
-    private int createDefaultBooks() {
+    private int createDefaultBooks(List<String> authors) {
         int bookNumber = uploadConfig.getDefaultBooksNumber();
         Category category = categoryService.saveOrGetIfExists(Category.builder().name("default").build());
         List<Book> savedDefaultBooks = new ArrayList<>();
         for (int i = 1; i <= bookNumber; i++) {
+            Collections.shuffle(authors);
             savedDefaultBooks.add(bookService.createBook(Book.builder()
+                            .author(authors.get(0))
                             .name("Book_" + i)
                             .category(category)
                     .build()));

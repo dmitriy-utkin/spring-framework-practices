@@ -12,7 +12,17 @@ public interface BookSpecification {
     static Specification<Book> withFilter(BookFilter bookFilter) {
         return Specification.where(byBookName(bookFilter.getBookName()))
                 .and(byCategoryName(bookFilter.getCategoryName()))
-                .and(byCategoryId(bookFilter.getCategoryId()));
+                .and(byCategoryId(bookFilter.getCategoryId()))
+                .and(byAuthor(bookFilter.getAuthor()));
+    }
+
+    static Specification<Book> byAuthor(String author) {
+        return (root, query, cb) -> {
+            if (author == null) {
+                return null;
+            }
+            return cb.equal(root.get(Book.Fields.author), author);
+        };
     }
 
     static Specification<Book> byCategoryId(Long categoryId) {
