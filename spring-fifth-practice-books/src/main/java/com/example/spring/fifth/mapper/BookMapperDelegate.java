@@ -16,6 +16,7 @@ public abstract class BookMapperDelegate implements BookMapper {
     public BookResponse bookToBookResponse(Book book) {
         return BookResponse.builder()
                 .id(book.getId())
+                .author(book.getAuthor())
                 .name(book.getName())
                 .category(book.getCategory().getName())
                 .build();
@@ -24,6 +25,7 @@ public abstract class BookMapperDelegate implements BookMapper {
     @Override
     public Book requestToBook(UpsertBookRequest request) {
         return Book.builder()
+                .author(request.getAuthor())
                 .name(request.getName())
                 .category(categoryService.saveOrGetIfExists(Category.builder().name(request.getCategory()).build()))
                 .build();

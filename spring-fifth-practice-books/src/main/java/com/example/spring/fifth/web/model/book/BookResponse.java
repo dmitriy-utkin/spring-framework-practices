@@ -13,6 +13,7 @@ import lombok.experimental.FieldNameConstants;
 @FieldNameConstants
 public class BookResponse {
     private Long id;
+    private String author;
     private String name;
     private String category;
 }

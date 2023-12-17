@@ -15,9 +15,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -36,14 +34,25 @@ public class AppStartedListener {
         }
         List<JsonBookModel> jsonBooks = JsonUtil.prepareJsonBookList(new File(uploadConfig.getDataPath()));
         List<Book> savedBooks = new ArrayList<>();
+        List<String> authors = getAuthors();
         jsonBooks.forEach(b -> {
+            Collections.shuffle(authors);
+            String author = authors.get(0);
             Category category = categoryService
                     .saveOrGetIfExists(Category.builder().name(b.getCategory().toLowerCase(Locale.ROOT)).build());
-            Book book = Book.builder().category(category).name(b.getName()).build();
+            Book book = Book.builder().author(author).category(category).name(b.getName()).build();
             savedBooks.add(bookService.createBook(book));
         });
         int defaultBooksNum = createDefaultBooks();
         log.info("Was saved {} generic books and {} default books", savedBooks.size(), defaultBooksNum);
+    }
+
+    private List<String> getAuthors() {
+        List<String> authors = new ArrayList<>(10);
+        for (int i = 1; i <= 10; i++) {
+            authors.add("author" + i);
+        }
+        return authors;
     }
 
     private int createDefaultBooks() {

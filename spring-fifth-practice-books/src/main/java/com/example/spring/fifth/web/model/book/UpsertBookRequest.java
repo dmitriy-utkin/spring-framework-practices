@@ -12,6 +12,7 @@ import lombok.experimental.FieldNameConstants;
 @FieldNameConstants
 @Builder
 public class UpsertBookRequest {
+    private String author;
     private String name;
     private String category;
 }
