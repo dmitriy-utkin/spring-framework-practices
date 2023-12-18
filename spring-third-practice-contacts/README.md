@@ -6,7 +6,7 @@ ___
 
 Hello :wave:
 
-## Practice #2 tasks:
+## Practice #3 tasks:
 
 * Spring MVC architectural pattern introduction
 * JdbcTemplate introduction
