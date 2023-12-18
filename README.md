@@ -10,7 +10,12 @@
 ![Static Badge](https://img.shields.io/badge/Spring_practice-simple_CRUD-blue)
 ![Static Badge](https://img.shields.io/badge/Contact-list-blue)
 
-First practice on Spring Framework course. CRUD application to manage contact list with profiling of application, custom repository without external services.
+The Spring Course Practices project is a console application for managing contacts. It uses profiles for applications and bean injections. 
+The main features include printing all contacts, adding new contacts, removing contacts, and stopping the application. 
+The model structure consists of a Contact class with fields for full name, phone number, and email. 
+Contact objects are stored in a List in temporary storage. The configuration structure includes application properties with main string values, error messages, paths for input/output features, template messages for launcher, and rules for user input validation. 
+The application supports two profiles: default and init. The main beans for practice include DefaultUploadServiceImpl.java for launching without external data set uploading and InitUploadServiceImpl.java for launching with data set uploading. 
+You can change the profile settings to choose between the two options.
 
 ### [Second practice](https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-second-practice-students)
 ![Static Badge](https://img.shields.io/badge/docker-first_meet-red)
