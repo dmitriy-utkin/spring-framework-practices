@@ -2,8 +2,6 @@
 
 Hey there :wave:
 
-_All Spring framework course practices will be posted here._
-
 ## Practice 1 / Contacts application. Task:  using profiles for applications, beans injections
 
 `path: src/main/java/com/contacts_practiceOne`
