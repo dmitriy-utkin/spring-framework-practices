@@ -1,4 +1,4 @@
-# All Spring Framework Course Practices
+# Spring Framework main Practices
 ---
 
 ## Below you will find the short description of each practice in thisrepository. Also you can get exact information about each of them in the README.md file for each of them, just click on the link to see more details.
