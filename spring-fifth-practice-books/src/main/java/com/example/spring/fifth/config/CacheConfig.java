@@ -17,7 +17,7 @@ import java.util.Map;
 @Configuration
 @EnableCaching
 @EnableConfigurationProperties(AppCacheProperties.class)
-public class CacheConfiguration {
+public class CacheConfig {
 
     @Bean
     @ConditionalOnProperty(prefix = "app.cache", name = "enable", havingValue = "true")

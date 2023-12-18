@@ -1,6 +1,5 @@
 package com.example.spring.fifth.service.impl;
 
-import com.example.spring.fifth.config.CacheConfiguration;
 import com.example.spring.fifth.config.properties.AppCacheProperties;
 import com.example.spring.fifth.exception.EntityNotFoundException;
 import com.example.spring.fifth.model.Book;

@@ -1,5 +1,6 @@
 package com.example.spring.fifth.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
@@ -19,6 +20,7 @@ public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     private String name;
@@ -26,5 +28,6 @@ public class Category implements Serializable {
     @Builder.Default
     @OneToMany(mappedBy = Book.Fields.category, cascade = CascadeType.ALL)
     @ToString.Exclude
+    @JsonIgnore
     private List<Book> books = new ArrayList<>();
 }
