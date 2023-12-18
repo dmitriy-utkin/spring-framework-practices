@@ -20,7 +20,7 @@ import java.util.Map;
 public class CacheConfiguration {
 
     @Bean
-    @ConditionalOnProperty(prefix = "app.redis-cache", name = "enable", havingValue = "true")
+    @ConditionalOnProperty(prefix = "app.cache", name = "enable", havingValue = "true")
     public CacheManager redisCacheManager(AppCacheProperties appCacheProperties, LettuceConnectionFactory lettuceConnectionFactory) {
         var defaultConfig = RedisCacheConfiguration.defaultCacheConfig();
         Map<String, RedisCacheConfiguration> redisCaches = new HashMap<>();
@@ -30,7 +30,7 @@ public class CacheConfiguration {
                 ))
         );
 
-        return RedisCacheManager.builder()
+        return RedisCacheManager.builder(lettuceConnectionFactory)
                 .cacheDefaults(defaultConfig)
                 .withInitialCacheConfigurations(redisCaches)
                 .build();

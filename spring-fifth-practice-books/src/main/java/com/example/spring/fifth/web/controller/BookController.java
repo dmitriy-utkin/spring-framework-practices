@@ -20,25 +20,6 @@ public class BookController {
 
     private final BookService bookService;
 
-    @GetMapping("/search/category")
-    public ResponseEntity<BookListResponse> searchBookByCategory(@RequestParam("category") String category) {
-        return ResponseEntity.ok(
-                bookMapper.bookListToBookListResponse(
-                        bookService.findByCategory(category)
-                )
-        );
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<BookResponse> findBookByBookNameAndAuthor(@RequestParam("name") String name,
-                                                                    @RequestParam("author") String author) {
-        return ResponseEntity.ok(
-                bookMapper.bookToBookResponse(
-                        bookService.findByNameAndAuthor(name, author)
-                )
-        );
-    }
-
     @GetMapping
     public ResponseEntity<BookListResponse> findAll(@RequestBody FindAllSettings findAllSettings) {
         return ResponseEntity.ok(
@@ -53,6 +34,43 @@ public class BookController {
         return ResponseEntity.ok(
                 bookMapper.bookToBookResponse(
                         bookService.findByName(name)
+                )
+        );
+    }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<BookResponse> findBookById(@PathVariable Long id) {
+        return ResponseEntity.ok(
+                bookMapper.bookToBookResponse(
+                        bookService.findById(id)
+                )
+        );
+    }
+
+    @GetMapping("/author/{author}")
+    public ResponseEntity<BookListResponse> findBookByAuthor(@PathVariable String author) {
+        return ResponseEntity.ok(
+                bookMapper.bookListToBookListResponse(
+                        bookService.findAllByAuthor(author)
+                )
+        );
+    }
+
+    @GetMapping("/search/category")
+    public ResponseEntity<BookListResponse> searchBookByCategory(@RequestParam("category") String category) {
+        return ResponseEntity.ok(
+                bookMapper.bookListToBookListResponse(
+                        bookService.findAllByCategory(category)
+                )
+        );
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<BookResponse> findBookByBookNameAndAuthor(@RequestParam("name") String name,
+                                                                    @RequestParam("author") String author) {
+        return ResponseEntity.ok(
+                bookMapper.bookToBookResponse(
+                        bookService.findByNameAndAuthor(name, author)
                 )
         );
     }

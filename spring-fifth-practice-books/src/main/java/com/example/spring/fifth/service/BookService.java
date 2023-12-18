@@ -13,6 +13,7 @@ public interface BookService {
     Book updateBook(Long id, Book book);
     void deleteBookById(Long id);
     Long count();
-    List<Book> findByCategory(String category);
+    List<Book> findAllByCategory(String category);
     Book findByNameAndAuthor(String name, String author);
+    List<Book> findAllByAuthor(String author);
 }

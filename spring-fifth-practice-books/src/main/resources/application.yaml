@@ -15,19 +15,27 @@ app:
     enable: true
     dataPath: src/main/resources/data/books-mock-data.json
     defaultBooksNumber: 20
-  redis-cache:
-    enable: true
   cache:
+    enable: true
     cacheType: redis
     cacheNames:
       - dbBooks
       - dbBooksByCategory
       - dbBookByNameAndAuthor
+      - dbBookById
+      - dbBookByName
+      - dbBooksByAuthor
     properties:
       dbBooks:
         expiry: 3m
       dbBooksByCategory:
         expiry: 3m
       dbBookByNameAndAuthor:
+        expiry: 3m
+      dbBookById:
+        expiry: 3m
+      dbBookByName:
+        expiry: 3m
+      dbBooksByAuthor:
         expiry: 3m
 

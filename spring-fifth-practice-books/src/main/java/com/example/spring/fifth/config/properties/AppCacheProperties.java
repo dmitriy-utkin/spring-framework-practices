@@ -19,8 +19,11 @@ public class AppCacheProperties {
 
     public interface CacheNames {
         String DB_BOOKS = "dbBooks";
+        String DB_BOOK_BY_ID = "dbBookById";
+        String DB_BOOK_BY_NAME = "dbBookByName";
         String DB_BOOKS_BY_CATEGORY = "dbBooksByCategory";
         String DB_BOOK_BY_NAME_AND_AUTHOR = "dbBookByNameAndAuthor";
+        String DB_BOOKS_BY_AUTHOR ="dbBooksByAuthor";
     }
 
 
