@@ -36,7 +36,11 @@ The main console commands allow users to add new students, print saved students,
 ![Static Badge](https://img.shields.io/badge/Docker-compose-orange)
 ![Static Badge](https://img.shields.io/badge/PostgreSQL-db-orange)
 
-Simple CRUP application for storing of contacts details. Was used JDBC template.
+The Spring Course Practices project utilizes Docker-compose for PostgreSQL, Spring Boot for the web with MVC architecture, JdbcTemplate for repository implementation, and EventListening. 
+The main configuration points include setting the active profile, configuring the database connection, and enabling event listening. 
+The application's model consists of a simple POJO for contacts and a custom CRUD repository implemented with JdbcTemplate. 
+To launch the application, first, Docker needs to be downloaded and the command "docker compose up" should be run in the "../docker/" directory. 
+Once the PostgreSQL database is ready to accept connections, the application can be launched from an IDE.
 
 ### [Fourth practice](https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-fourth-practice-news)
 ![Static Badge](https://img.shields.io/badge/Docker-compose-orange)
