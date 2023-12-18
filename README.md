@@ -23,7 +23,12 @@ You can change the profile settings to choose between the two options.
 ![Static Badge](https://img.shields.io/badge/Spring-listener-red)
 ![Static Badge](https://img.shields.io/badge/Spring-Shell-red)
 
-Second practice from Spring Framework course. CRUD students to the student list, custom repo and events, internal listening, Docker practice.
+The Spring Course Practices project is a console application that incorporates Docker, Spring Shell, and Event Listening. 
+It introduces the use of config beans, event listener creation, and containerization with Docker. 
+The main configuration points include setting the active profile for the application, enabling event listening, and uploading data. 
+The application's model consists of a simple POJO for students, a custom CRUD repository, and custom event realizations. 
+The application can be launched using Docker or directly in an IDE. 
+The main console commands allow users to add new students, print saved students, and remove students by ID or all at once.
 
 ### [Third practice](https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-third-practice-contacts)
 ![Static Badge](https://img.shields.io/badge/Contact-list_(again)-green)
