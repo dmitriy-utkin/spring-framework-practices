@@ -48,7 +48,15 @@ Once the PostgreSQL database is ready to accept connections, the application can
 ![Static Badge](https://img.shields.io/badge/AOP-paradigm-orange)
 ![Static Badge](https://img.shields.io/badge/Custom-annotations-orange)
 
-This one contains code for the Spring course practice, covering topics like dependency injection, AOP, Spring MVC, etc. It's designed for students and professionals looking to improve their Spring skills. The Java code can be used as a reference for learning Spring development.
+The Spring Course Practices project introduces several new features, including AOP for user input validation with admin privilege, OpenAPI documentation, Spring Test, Web interceptors, and mapping with MapStruct to transfer Entities <-> DTOs. 
+It also utilizes JPA specifications and Docker-compose for PostgreSQL. 
+The main configuration points include setting the active profile, configuring the database connection, and enabling event listening. 
+The application's model consists of a simple POJO for contacts and a custom CRUD repository implemented with JdbcTemplate. 
+To launch the application, Docker needs to be downloaded, and the command "docker compose up" should be run in the "../docker/" directory. 
+Once the PostgreSQL database is ready to accept connections, the application can be launched from an IDE. 
+The project also provides detailed instructions for setting up and launching the application, including managing users, news, comments, and topics with privilege restrictions. 
+Pagination and filtering options are also available for news and users, with default settings and additional filters provided. The project's functionality can be explored further through the OpenAPI web client when the application is running. 
+Users can also customize privilege validation and access detailed descriptions of available features through the OpenAPI web client.
 
 ### [Fifth practice](https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-fifth-practice-books)
 ![Static Badge](https://img.shields.io/badge/Docker-compose-orange)
