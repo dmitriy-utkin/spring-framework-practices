@@ -48,7 +48,7 @@ public class BookController {
     }
 
     @GetMapping("/author/{author}")
-    public ResponseEntity<BookListResponse> findBookByAuthor(@PathVariable String author) {
+    public ResponseEntity<BookListResponse> findBooksByAuthor(@PathVariable String author) {
         return ResponseEntity.ok(
                 bookMapper.bookListToBookListResponse(
                         bookService.findAllByAuthor(author)
