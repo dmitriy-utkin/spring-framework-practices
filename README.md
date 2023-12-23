@@ -63,3 +63,4 @@ Users can also customize privilege validation and access detailed descriptions o
 ![Static Badge](https://img.shields.io/badge/PostgreSQL-db-orange)
 ![Static Badge](https://img.shields.io/badge/Redis-cache-orange)
 
+### [Sixth practice](https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-sixth-practice-orders-kafka)
