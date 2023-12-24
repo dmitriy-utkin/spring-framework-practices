@@ -1,5 +1,6 @@
 package com.practice.order.event;
 
+import com.practice.order.model.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,4 +13,5 @@ import lombok.NoArgsConstructor;
 public class OrderEvent {
     private String product;
     private Integer quantity;
+    private OrderStatus status;
 }
