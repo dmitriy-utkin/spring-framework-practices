@@ -25,4 +25,8 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
+    public Order updateStatus(Order order) {
+        return orderRepository.updateStatus(order);
+    }
+
 }
