@@ -2,9 +2,12 @@ package com.practice.order.mapper;
 
 import com.practice.order.event.OrderEvent;
 import com.practice.order.model.Order;
+import com.practice.order.web.model.OrderListResponse;
 import com.practice.order.web.model.OrderResponse;
 import com.practice.order.web.model.UpsertOrder;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class OrderMapper {
@@ -14,6 +17,12 @@ public class OrderMapper {
                 .product(request.getProduct())
                 .quantity(request.getQuantity())
                 .status(request.getStatus())
+                .build();
+    }
+
+    public OrderListResponse orderListToOrderListResponse(List<Order> orderList) {
+        return OrderListResponse.builder()
+                .orders(orderList.stream().map(this::orderToResponse).toList())
                 .build();
     }
 

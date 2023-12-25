@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -19,6 +21,10 @@ public class OrderService {
 
     @Value("${app.kafka.serviceTopic}")
     private String kafkaTopicName;
+
+    public List<Order> findAll() {
+        return orderRepository.findAll();
+    }
 
     public Order save(Order order) {
         kafkaTemplate.send(kafkaTopicName, orderMapper.orderToOrderEvent(order));

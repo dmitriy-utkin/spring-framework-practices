@@ -5,6 +5,7 @@ import lombok.Builder;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -13,6 +14,10 @@ public class OrderRepository {
 
     @Builder.Default
     private Map<String, Order> orders = new HashMap<>();
+
+    public List<Order> findAll() {
+        return orders.values().stream().toList();
+    }
 
     public Order save(Order order) {
         orders.put(getKey(order), order);
