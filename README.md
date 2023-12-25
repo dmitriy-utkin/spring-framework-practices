@@ -63,4 +63,6 @@ Users can also customize privilege validation and access detailed descriptions o
 ![Static Badge](https://img.shields.io/badge/PostgreSQL-db-orange)
 ![Static Badge](https://img.shields.io/badge/Redis-cache-orange)
 
+The book management application is a comprehensive example of leveraging modern technologies to create a full-fledged CRUD application. By incorporating Redis for caching, PostgreSQL for data storage, Docker for deployment, and Testcontainer for testing, the application demonstrates best practices in software development.
+
 ### [Sixth practice](https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-sixth-practice-orders-kafka)
