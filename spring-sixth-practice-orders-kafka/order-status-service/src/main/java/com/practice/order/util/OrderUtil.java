@@ -1,6 +1,6 @@
 package com.practice.order.util;
 
-import com.practice.order.event.OrderStatus;
+import com.practice.order.model.OrderStatus;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;

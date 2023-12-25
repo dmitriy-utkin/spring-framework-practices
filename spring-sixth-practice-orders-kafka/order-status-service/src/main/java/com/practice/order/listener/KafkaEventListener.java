@@ -12,6 +12,7 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Component
@@ -36,7 +37,8 @@ public class KafkaEventListener {
                        @Header(KafkaHeaders.RECEIVED_TIMESTAMP) Long timestamp) {
         log.info("Received new event: {}", orderEvent);
         log.info("Key - {}; Topic - {}; Partition - {}; Time - {}", key, topic, partition, timestamp);
-        orderEvent.setStatus(OrderUtil.getRandomOrderStatus());
+        orderEvent.getOrder().setStatus(OrderUtil.getRandomOrderStatus());
+        orderEvent.setDate(Instant.now());
         kafkaTemplate.send(kafkaTopic, orderEvent);
     }
 }

@@ -7,6 +7,7 @@ import com.practice.order.web.model.OrderResponse;
 import com.practice.order.web.model.UpsertOrder;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.List;
 
 @Component
@@ -36,17 +37,16 @@ public class OrderMapper {
 
     public OrderEvent orderToOrderEvent(Order order) {
         return OrderEvent.builder()
-                .product(order.getProduct())
-                .quantity(order.getQuantity())
-                .status(order.getStatus())
+                .date(Instant.now())
+                .order(order)
                 .build();
     }
 
     public Order orderEventToOrder(OrderEvent event) {
         return Order.builder()
-                .product(event.getProduct())
-                .quantity(event.getQuantity())
-                .status(event.getStatus())
+                .product(event.getOrder().getProduct())
+                .quantity(event.getOrder().getQuantity())
+                .status(event.getOrder().getStatus())
                 .build();
     }
 }
