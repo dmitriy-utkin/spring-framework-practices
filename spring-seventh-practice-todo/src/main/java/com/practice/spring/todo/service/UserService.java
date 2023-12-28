@@ -12,5 +12,6 @@ public interface UserService {
     Mono<User> create(User user);
     Mono<User> updateById(String id, User user);
     Mono<Void> deleteById(String id);
+    Mono<Boolean> existsByUsername(String username);
 
 }

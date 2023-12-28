@@ -1,1 +1,11 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017/tododatabase?authSource=admin
 
+app:
+  listening:
+    enable: true
+  user:
+    username: dmitriy_un
+    email: dm.utkin@icloud.com

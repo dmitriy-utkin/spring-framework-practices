@@ -1,11 +1,10 @@
-package com.practice.spring.todo.model;
+package com.practice.spring.todo.web.model.task;
 
+import com.practice.spring.todo.model.TaskStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.*;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 import java.util.Set;
@@ -14,37 +13,24 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document(collection = "tasks")
-public class Task {
+public class TaskResponse {
 
-    @Id
     private String id;
 
     private String name;
 
     private String description;
 
-    @CreatedDate
     private Instant createdAt;
 
-    @LastModifiedDate
     private Instant updatedAt;
 
-    private TaskStatus status;
+    private String status;
 
     private String authorId;
 
     private String assigneeId;
 
     private Set<String> observerIds;
-
-    @ReadOnlyProperty
-    private User author;
-
-    @ReadOnlyProperty
-    private User assignee;
-
-    @ReadOnlyProperty
-    private Set<User> observers;
 
 }

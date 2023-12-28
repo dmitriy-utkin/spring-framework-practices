@@ -1,13 +1,12 @@
 package com.practice.spring.todo.service.impl;
 
-import com.practice.spring.todo.exception.EntityAlreadyExists;
+import com.practice.spring.todo.configuration.UserConfig;
 import com.practice.spring.todo.model.User;
 import com.practice.spring.todo.repository.UserRepository;
 import com.practice.spring.todo.service.UserService;
 import com.practice.spring.todo.utils.EntityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -51,5 +50,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Mono<Void> deleteById(String id) {
         return userRepository.deleteById(id);
+    }
+
+    @Override
+    public Mono<Boolean> existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 }

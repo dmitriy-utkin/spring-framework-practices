@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Instant;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -35,6 +37,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Mono<Task> create(Task task) {
         task.setId(UUID.randomUUID().toString());
+        task.setCreatedAt(Instant.now());
+        task.setUpdatedAt(Instant.now());
         return taskRepository.save(task);
     }
 
@@ -42,7 +46,19 @@ public class TaskServiceImpl implements TaskService {
     public Mono<Task> updateById(String id, Task task) {
         return findById(id).flatMap(taskForUpdate -> {
             EntityUtil.copyNonNullProperties(task, taskForUpdate);
+            taskForUpdate.setUpdatedAt(Instant.now());
             return taskRepository.save(taskForUpdate);
+        });
+    }
+
+    @Override
+    public Mono<Task> addObserver(String taskId, String observerId) {
+        return findById(taskId).flatMap(taskForObserverAdding -> {
+            Set<String> observers = taskForObserverAdding.getObserverIds();
+            observers.add(observerId);
+            taskForObserverAdding.setObserverIds(observers);
+            taskForObserverAdding.setUpdatedAt(Instant.now());
+            return taskRepository.save(taskForObserverAdding);
         });
     }
 

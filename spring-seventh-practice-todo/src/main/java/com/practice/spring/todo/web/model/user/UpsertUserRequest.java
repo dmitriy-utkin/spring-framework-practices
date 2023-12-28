@@ -1,4 +1,4 @@
-package com.practice.spring.todo.web.model;
+package com.practice.spring.todo.web.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UpsertUserRequest {
-    private String name;
+    private String username;
     private String email;
 }
