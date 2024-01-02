@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -55,5 +56,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Mono<Boolean> existsByUsername(String username) {
         return userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public Flux<User> findAllByIds(Set<String> ids) {
+        return userRepository.findAllById(ids);
+    }
+
+    @Override
+    public Long count() {
+        return userRepository.count().block();
     }
 }

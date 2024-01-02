@@ -1,6 +1,7 @@
 package com.practice.spring.todo.mapper;
 
 import com.practice.spring.todo.model.Task;
+import com.practice.spring.todo.web.model.task.SimpleTaskResponse;
 import com.practice.spring.todo.web.model.task.TaskResponse;
 import com.practice.spring.todo.web.model.task.UpsertTaskRequest;
 
@@ -32,6 +33,21 @@ public abstract class TaskMapperDelegate implements TaskMapper {
     @Override
     public TaskResponse taskToResponse(Task task) {
         return TaskResponse.builder()
+                .id(task.getId())
+                .name(task.getName())
+                .description(task.getDescription())
+                .createdAt(task.getCreatedAt())
+                .updatedAt(task.getUpdatedAt())
+                .status(task.getStatus().toString())
+                .author(task.getAuthor())
+                .assignee(task.getAssignee())
+                .observers(task.getObservers())
+                .build();
+    }
+
+    @Override
+    public SimpleTaskResponse taskToSimpleTaskResponse(Task task) {
+        return SimpleTaskResponse.builder()
                 .id(task.getId())
                 .name(task.getName())
                 .description(task.getDescription())

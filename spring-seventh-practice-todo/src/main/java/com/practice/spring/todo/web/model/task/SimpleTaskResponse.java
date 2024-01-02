@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TaskResponse {
+public class SimpleTaskResponse {
 
     private String id;
 
@@ -27,10 +27,9 @@ public class TaskResponse {
 
     private String status;
 
-    private User author;
+    private String authorId;
 
-    private User assignee;
+    private String assigneeId;
 
-    private Set<User> observers;
-
+    private Set<String> observerIds;
 }

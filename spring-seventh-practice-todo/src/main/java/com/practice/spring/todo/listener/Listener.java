@@ -37,6 +37,9 @@ public class Listener {
     @Order(2)
     @EventListener(ApplicationStartedEvent.class)
     public void addUsers() {
+        if (userService.count() > 1) {
+            return;
+        }
         for (int i = 0; i < 10; i++) {
             userService.create(User.builder()
                     .username("User " + (i + 1))

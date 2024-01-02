@@ -1,6 +1,7 @@
 package com.practice.spring.todo.mapper;
 
 import com.practice.spring.todo.model.Task;
+import com.practice.spring.todo.web.model.task.SimpleTaskResponse;
 import com.practice.spring.todo.web.model.task.TaskResponse;
 import com.practice.spring.todo.web.model.task.UpsertTaskRequest;
 import org.mapstruct.DecoratedWith;
@@ -16,4 +17,6 @@ public interface TaskMapper {
     Task requestToTask(String authorId, UpsertTaskRequest request);
 
     TaskResponse taskToResponse(Task task);
+
+    SimpleTaskResponse taskToSimpleTaskResponse(Task task);
 }

@@ -4,6 +4,7 @@ import com.practice.spring.todo.configuration.UserConfig;
 import com.practice.spring.todo.mapper.TaskMapper;
 import com.practice.spring.todo.publisher.UpdatePublisher;
 import com.practice.spring.todo.service.TaskService;
+import com.practice.spring.todo.web.model.task.SimpleTaskResponse;
 import com.practice.spring.todo.web.model.task.TaskResponse;
 import com.practice.spring.todo.web.model.task.UpsertTaskRequest;
 import lombok.RequiredArgsConstructor;
@@ -37,26 +38,26 @@ public class TaskController {
     }
 
     @PostMapping
-    public Mono<ResponseEntity<TaskResponse>> createTask(@RequestBody UpsertTaskRequest request) {
+    public Mono<ResponseEntity<SimpleTaskResponse>> createTask(@RequestBody UpsertTaskRequest request) {
         return taskService.create(taskMapper.requestToTask(userConfig.getId(), request))
-                .map(taskMapper::taskToResponse)
+                .map(taskMapper::taskToSimpleTaskResponse)
                 .doOnSuccess(publisher::publish)
                 .flatMap(newTask -> Mono.just(ResponseEntity.status(HttpStatus.CREATED).body(newTask)));
     }
 
     @PutMapping("/observers/{taskId}")
-    public Mono<ResponseEntity<TaskResponse>> addObserver(@PathVariable String taskId, @RequestParam String observerId) {
+    public Mono<ResponseEntity<SimpleTaskResponse>> addObserver(@PathVariable String taskId, @RequestParam String observerId) {
         return taskService.addObserver(taskId, observerId)
-                .map(taskMapper::taskToResponse)
+                .map(taskMapper::taskToSimpleTaskResponse)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<TaskResponse>> updateTaskById(@PathVariable String id,
-                                                             @RequestBody UpsertTaskRequest request) {
+    public Mono<ResponseEntity<SimpleTaskResponse>> updateTaskById(@PathVariable String id,
+                                                                   @RequestBody UpsertTaskRequest request) {
         return taskService.updateById(id, taskMapper.requestToTask(request))
-                .map(taskMapper::taskToResponse)
+                .map(taskMapper::taskToSimpleTaskResponse)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }

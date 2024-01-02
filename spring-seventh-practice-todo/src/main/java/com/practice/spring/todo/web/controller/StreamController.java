@@ -1,6 +1,7 @@
 package com.practice.spring.todo.web.controller;
 
 import com.practice.spring.todo.publisher.UpdatePublisher;
+import com.practice.spring.todo.web.model.task.SimpleTaskResponse;
 import com.practice.spring.todo.web.model.task.TaskResponse;
 import com.practice.spring.todo.web.model.user.UserResponse;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class StreamController {
     }
 
     @GetMapping(value = "/task", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<ServerSentEvent<TaskResponse>> getTaskUpdate() {
+    public Flux<ServerSentEvent<SimpleTaskResponse>> getTaskUpdate() {
         return publisher.getTaskUpdateSink().asFlux()
                 .map(item -> ServerSentEvent.builder(item).build());
     }

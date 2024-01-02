@@ -20,4 +20,8 @@ public class User {
     private String username;
 
     private String email;
+
+    public static User emptyUser() {
+        return new User();
+    }
 }

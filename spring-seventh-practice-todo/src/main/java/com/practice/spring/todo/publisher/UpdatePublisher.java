@@ -1,6 +1,6 @@
 package com.practice.spring.todo.publisher;
 
-import com.practice.spring.todo.web.model.task.TaskResponse;
+import com.practice.spring.todo.web.model.task.SimpleTaskResponse;
 import com.practice.spring.todo.web.model.user.UserResponse;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Sinks;
@@ -9,7 +9,7 @@ import reactor.core.publisher.Sinks;
 public class UpdatePublisher {
 
     private final Sinks.Many<UserResponse> userUpdateSink;
-    private final Sinks.Many<TaskResponse> taskUpdateSink;
+    private final Sinks.Many<SimpleTaskResponse> taskUpdateSink;
 
     public UpdatePublisher() {
         this.userUpdateSink = Sinks.many().multicast().onBackpressureBuffer();
@@ -20,7 +20,7 @@ public class UpdatePublisher {
         userUpdateSink.tryEmitNext(userResponse);
     }
 
-    public void publish(TaskResponse taskResponse) {
+    public void publish(SimpleTaskResponse taskResponse) {
         taskUpdateSink.tryEmitNext(taskResponse);
     }
 
@@ -28,7 +28,7 @@ public class UpdatePublisher {
         return userUpdateSink;
     }
 
-    public Sinks.Many<TaskResponse> getTaskUpdateSink() {
+    public Sinks.Many<SimpleTaskResponse> getTaskUpdateSink() {
         return taskUpdateSink;
     }
 }
