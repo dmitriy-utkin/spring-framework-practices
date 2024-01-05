@@ -34,8 +34,8 @@ public class UserController {
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/username")
-    public Mono<ResponseEntity<UserResponse>> getUserByUsername(@RequestParam String username) {
+    @GetMapping("/username/{username}")
+    public Mono<ResponseEntity<UserResponse>> getUserByUsername(@PathVariable String username) {
         return userService.findByUsername(username)
                 .map(userMapper::userToResponse)
                 .map(ResponseEntity::ok)

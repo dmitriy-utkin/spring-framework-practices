@@ -6,11 +6,13 @@ import com.practice.spring.todo.model.User;
 import com.practice.spring.todo.repository.TaskRepository;
 import com.practice.spring.todo.repository.UserRepository;
 import com.practice.spring.todo.web.model.task.TaskResponse;
+import com.practice.spring.todo.web.model.user.UserResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -27,6 +29,7 @@ import java.util.UUID;
 @SpringBootTest
 @Testcontainers
 @AutoConfigureWebTestClient
+@ActiveProfiles("test")
 public class TestAbstract {
 
     @Autowired
@@ -43,7 +46,6 @@ public class TestAbstract {
 
     protected static String FIRST_TASK_ID = UUID.randomUUID().toString();
     protected static String SECOND_TASK_ID = UUID.randomUUID().toString();
-//    protected static Instant INSTANT_NOW = Instant.now();
 
     @Container
     static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:6.0.8")
@@ -81,8 +83,6 @@ public class TestAbstract {
                 .id(taskId)
                 .name("task" + taskNum)
                 .description("description" + taskNum)
-//                .createdAt(INSTANT_NOW)
-//                .updatedAt(INSTANT_NOW)
                 .status(TaskStatus.TODO)
                 .authorId(userId)
                 .observerIds(new HashSet<>())
@@ -94,12 +94,18 @@ public class TestAbstract {
                 .id(taskId)
                 .name("task" + taskNum)
                 .description("description" + taskNum)
-//                .createdAt(INSTANT_NOW)
-//                .updatedAt(INSTANT_NOW)
                 .author(new User(userId, ("user" + userNum), ("user" + userNum + "@email.com")))
                 .assignee(User.emptyUser())
                 .status(TaskStatus.TODO.toString())
                 .observers(new HashSet<>())
+                .build();
+    }
+
+    protected UserResponse createDefaultUserResponse(int userNum, String userId) {
+        return UserResponse.builder()
+                .id(userId)
+                .username("user" + userNum)
+                .email("user" + userNum + "@email.com")
                 .build();
     }
 }
