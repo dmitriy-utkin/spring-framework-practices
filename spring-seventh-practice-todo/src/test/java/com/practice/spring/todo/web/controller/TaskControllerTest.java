@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
+import java.util.Set;
 
 public class TaskControllerTest extends TestAbstract {
 
@@ -106,6 +107,18 @@ public class TaskControllerTest extends TestAbstract {
                 .value(response -> {
                     assertEquals(response.getStatus(), "IN_PROGRESS");
                     assertEquals(response.getName(), "updatedTask");
+                });
+    }
+
+    @Test
+    public void whenAddNewObserverToTaskById_thenReturnUpdatedTask() {
+        webTestClient.put().uri("/api/task/observers/{taskId}?observerId={observerId}", FIRST_TASK_ID, SECOND_USER_ID)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(SimpleTaskResponse.class)
+                .value(response -> {
+                    assertEquals(response.getId(), FIRST_TASK_ID);
+                    assertEquals(response.getObserverIds(), Set.of(SECOND_USER_ID));
                 });
     }
 

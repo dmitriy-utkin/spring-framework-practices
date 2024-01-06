@@ -2,7 +2,6 @@ package com.practice.spring.todo.web.controller;
 
 import com.practice.spring.todo.publisher.UpdatePublisher;
 import com.practice.spring.todo.web.model.task.SimpleTaskResponse;
-import com.practice.spring.todo.web.model.task.TaskResponse;
 import com.practice.spring.todo.web.model.user.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

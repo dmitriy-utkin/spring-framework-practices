@@ -1,6 +1,5 @@
 package com.practice.spring.todo.web.model.task;
 
-import com.practice.spring.todo.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

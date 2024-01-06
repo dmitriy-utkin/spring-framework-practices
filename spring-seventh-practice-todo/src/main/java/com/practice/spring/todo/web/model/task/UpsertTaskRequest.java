@@ -1,6 +1,5 @@
 package com.practice.spring.todo.web.model.task;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.practice.spring.todo.model.TaskStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

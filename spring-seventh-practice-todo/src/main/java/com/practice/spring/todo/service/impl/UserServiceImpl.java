@@ -1,6 +1,5 @@
 package com.practice.spring.todo.service.impl;
 
-import com.practice.spring.todo.configuration.UserConfig;
 import com.practice.spring.todo.model.User;
 import com.practice.spring.todo.repository.UserRepository;
 import com.practice.spring.todo.service.UserService;
