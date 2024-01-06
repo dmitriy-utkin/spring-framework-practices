@@ -84,5 +84,6 @@ Key features of the application include CRUD operations for managing Orders, uti
 
 ![Static Badge](https://img.shields.io/badge/Docker-compose-red)
 ![Static Badge](https://img.shields.io/badge/Reactive-programming-green)
+
 Introduction to reactive prograaming and NoSQL MongoDB. This appliaction is a TODO storage, you can add/update/delete/get tasks, also make a new users and deligate some task to another user.
 
