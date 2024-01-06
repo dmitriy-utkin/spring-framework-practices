@@ -31,6 +31,7 @@ The main console commands allow users to add new students, print saved students,
 ![Static Badge](https://img.shields.io/badge/Docker-compose-red)
 ![Static Badge](https://img.shields.io/badge/Docker-builder-red)
 ![Static Badge](https://img.shields.io/badge/Spring-data-green)
+
 ![Static Badge](https://img.shields.io/badge/Spring-thymeleaf-green)
 ![Static Badge](https://img.shields.io/badge/Spring-WEB-green)
 ![Static Badge](https://img.shields.io/badge/Postre-SQL-blue)
@@ -46,24 +47,22 @@ Once the PostgreSQL database is ready to accept connections, the application can
 ![Static Badge](https://img.shields.io/badge/Docker-compose-red)
 ![Static Badge](https://img.shields.io/badge/Spring-JPA-green)
 ![Static Badge](https://img.shields.io/badge/Spring-Validation-green)
+
 ![Static Badge](https://img.shields.io/badge/Spring-WEB-green)
 ![Static Badge](https://img.shields.io/badge/Postre-SQL-blue)
 ![Static Badge](https://img.shields.io/badge/Map-Struct-red)
 
 The Spring Course Practices project introduces several new features, including AOP for user input validation with admin privilege, OpenAPI documentation, Spring Test, Web interceptors, and mapping with MapStruct to transfer Entities <-> DTOs. 
-It also utilizes JPA specifications and Docker-compose for PostgreSQL. 
 The main configuration points include setting the active profile, configuring the database connection, and enabling event listening. 
 The application's model consists of a simple POJO for contacts and a custom CRUD repository implemented with JdbcTemplate. 
-To launch the application, Docker needs to be downloaded, and the command "docker compose up" should be run in the "../docker/" directory. 
-Once the PostgreSQL database is ready to accept connections, the application can be launched from an IDE. 
-The project also provides detailed instructions for setting up and launching the application, including managing users, news, comments, and topics with privilege restrictions. 
-Pagination and filtering options are also available for news and users, with default settings and additional filters provided. The project's functionality can be explored further through the OpenAPI web client when the application is running. 
+To launch the application, Docker needs to be downloaded, and the command "docker compose up" should be run in the "../docker/" directory. Pagination and filtering options are also available for news and users, with default settings and additional filters provided. The project's functionality can be explored further through the OpenAPI web client when the application is running. 
 Users can also customize privilege validation and access detailed descriptions of available features through the OpenAPI web client.
 
 ### [Fifth practice](https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-fifth-practice-books)
 ![Static Badge](https://img.shields.io/badge/Spring-cache-green)
 ![Static Badge](https://img.shields.io/badge/Docker-compose-red)
 ![Static Badge](https://img.shields.io/badge/Spring-JPA-green)
+
 ![Static Badge](https://img.shields.io/badge/Postre-SQL-blue)
 ![Static Badge](https://img.shields.io/badge/Redis-NoSQL-red)
 
@@ -73,7 +72,17 @@ The book management application is a comprehensive example of leveraging modern 
 ### [Sixth practice](https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-sixth-practice-orders-kafka)
 ![Static Badge](https://img.shields.io/badge/Kafka-7.3.3-orange)
 ![Static Badge](https://img.shields.io/badge/Zookeeper-7.4.3-orange)
+
 ![Static Badge](https://img.shields.io/badge/Docker-compose-red)
 ![Static Badge](https://img.shields.io/badge/Spring-WEB-green)
 
-Key features of the application include CRUD operations for managing Orders, utilizing a HashMap as an in-memory data store. This approach allows for swift retrieval and manipulation of Order data within the application. Furthermore, integration with Kafka enables the application to communicate asynchronously with other parts of the system. Leveraging Kafka listeners and producers streamlines the consumption and production of messages, ensuring seamless interaction between different components of the application. To simplify the deployment and management of Kafka, the application uses Docker Compose to launch Kafka and Zookeeper services. This approach guarantees easy access to and proper configuration of Kafka and Zookeeper for use within the application. Configuration parameters for Kafka are set via @Bean annotations, providing a clear and concise way to define the necessary configurations for interacting with Kafka. This empowers developers to tailor Kafka parameters according to their specific requirements while maintaining clean and organized code. In conclusion, our Spring MVC application with integrated Kafka functionality offers a robust solution for managing Orders and provides valuable experience in working with Kafka. With its seamless integration of an internal data store, Kafka message handling, and Docker-based deployment, this project serves as an excellent foundation for developers seeking practical experience with these technologies and aiming to build scalable, event-driven applications.
+Key features of the application include CRUD operations for managing Orders, utilizing a HashMap as an in-memory data store. This approach allows for swift retrieval and manipulation of Order data within the application. Furthermore, integration with Kafka enables the application to communicate asynchronously with other parts of the system. Leveraging Kafka listeners and producers streamlines the consumption and production of messages, ensuring seamless interaction between different components of the application. To simplify the deployment and management of Kafka, the application uses Docker Compose to launch Kafka and Zookeeper services. Introduction to event-driven applications.
+
+### [Seventh practice](https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-seventh-practice-todo)
+![Static Badge](https://img.shields.io/badge/Mongo-DB-green)
+![Static Badge](https://img.shields.io/badge/Spring_Web-FLUX-green)
+
+![Static Badge](https://img.shields.io/badge/Docker-compose-red)
+![Static Badge](https://img.shields.io/badge/Reactive-programming-green)
+Introduction to reactive prograaming and NoSQL MongoDB. This appliaction is a TODO storage, you can add/update/delete/get tasks, also make a new users and deligate some task to another user.
+
