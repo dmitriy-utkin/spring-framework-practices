@@ -1,6 +1,5 @@
 package com.practice.spring.todo.web.controller;
 
-import com.practice.spring.todo.configuration.UserConfig;
 import com.practice.spring.todo.mapper.TaskMapper;
 import com.practice.spring.todo.publisher.UpdatePublisher;
 import com.practice.spring.todo.service.TaskService;
@@ -22,7 +21,6 @@ public class TaskController {
     private final TaskService taskService;
     private final TaskMapper taskMapper;
     private final UpdatePublisher publisher;
-    private final UserConfig userConfig;
 
     @GetMapping
     public Flux<TaskResponse> getAllTasks() {
