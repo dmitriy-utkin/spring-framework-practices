@@ -1,0 +1,27 @@
+spring:
+  profiles:
+    active: prod
+  jpa:
+    generate-ddl: true
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/news_db
+    username: postgres
+    password: postgres
+    hikari:
+      schema: news_schema
+      connection-timeout: 10000
+
+app:
+  validation:
+    enable: true
+  user-settings:
+    userName: admin
+    userHeader: X-App-User
+
+  generic-data:
+    enable: true
+    multiplier: 3
+    newsDataPath: src/main/resources/data/news-data-set.json
+    usersDataPath: src/main/resources/data/users-data-set.json
+    commentsDataPath: src/main/resources/data/comments-data-set.json
