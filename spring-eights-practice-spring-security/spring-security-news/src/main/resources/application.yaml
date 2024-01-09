@@ -14,7 +14,7 @@ spring:
 
 app:
   validation:
-    enable: true
+    enable: false
   user-settings:
     userName: admin
     userHeader: X-App-User
