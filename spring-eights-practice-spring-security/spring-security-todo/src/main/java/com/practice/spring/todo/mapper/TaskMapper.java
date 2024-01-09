@@ -14,8 +14,6 @@ public interface TaskMapper {
 
     Task requestToTask(UpsertTaskRequest request);
 
-    Task requestToTask(String authorId, UpsertTaskRequest request);
-
     TaskResponse taskToResponse(Task task);
 
     SimpleTaskResponse taskToSimpleTaskResponse(Task task);

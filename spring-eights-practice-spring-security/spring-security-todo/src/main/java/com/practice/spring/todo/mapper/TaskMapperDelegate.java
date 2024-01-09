@@ -8,18 +8,6 @@ import com.practice.spring.todo.web.model.task.UpsertTaskRequest;
 public abstract class TaskMapperDelegate implements TaskMapper {
 
     @Override
-    public Task requestToTask(String authorId, UpsertTaskRequest request) {
-        return Task.builder()
-                .name(request.getName())
-                .description(request.getDescription())
-                .status(request.getStatus())
-                .authorId(authorId)
-                .assigneeId(request.getAssigneeId())
-                .observerIds(request.getObserverIds())
-                .build();
-    }
-
-    @Override
     public Task requestToTask(UpsertTaskRequest request) {
         return Task.builder()
                 .name(request.getName())

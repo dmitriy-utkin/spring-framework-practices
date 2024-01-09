@@ -28,6 +28,7 @@ public class User {
     private String email;
 
     @Field("roles")
+    @Builder.Default
     private Set<RoleType> roles = new HashSet<>();
 
     public static User emptyUser() {

@@ -4,5 +4,5 @@ spring:
       uri: mongodb://root:root@localhost:27017/tododatabase?authSource=admin
 
 app:
-  security:
-    type: basic # 'basic' or 'oauth'
+  listening:
+    enable: false

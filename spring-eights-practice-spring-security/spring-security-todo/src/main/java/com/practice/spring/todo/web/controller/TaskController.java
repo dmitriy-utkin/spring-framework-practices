@@ -9,9 +9,12 @@ import com.practice.spring.todo.web.model.task.UpsertTaskRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/task")
@@ -23,11 +26,13 @@ public class TaskController {
     private final UpdatePublisher publisher;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER')")
     public Flux<TaskResponse> getAllTasks() {
         return taskService.findAll().map(taskMapper::taskToResponse);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER')")
     public Mono<ResponseEntity<TaskResponse>> getTaskById(@PathVariable String id) {
         return taskService.findById(id)
                 .map(taskMapper::taskToResponse)
@@ -36,14 +41,17 @@ public class TaskController {
     }
 
     @PostMapping
-    public Mono<ResponseEntity<SimpleTaskResponse>> createTask(@RequestBody UpsertTaskRequest request) {
-        return taskService.create(taskMapper.requestToTask(userConfig.getId(), request))
+    @PreAuthorize("hasRole('MANAGER')")
+    public Mono<ResponseEntity<SimpleTaskResponse>> createTask(Mono<Principal> principal, @RequestBody UpsertTaskRequest request) {
+        return principal.map(Principal::getName)
+                .flatMap(authorUsername -> taskService.create(taskMapper.requestToTask(request), authorUsername)
                 .map(taskMapper::taskToSimpleTaskResponse)
                 .doOnSuccess(publisher::publish)
-                .flatMap(newTask -> Mono.just(ResponseEntity.status(HttpStatus.CREATED).body(newTask)));
+                .flatMap(newTask -> Mono.just(ResponseEntity.status(HttpStatus.CREATED).body(newTask))));
     }
 
     @PutMapping("/observers/{taskId}")
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER')")
     public Mono<ResponseEntity<SimpleTaskResponse>> addObserver(@PathVariable String taskId, @RequestParam String observerId) {
         return taskService.addObserver(taskId, observerId)
                 .map(taskMapper::taskToSimpleTaskResponse)
@@ -52,6 +60,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('MANAGER')")
     public Mono<ResponseEntity<SimpleTaskResponse>> updateTaskById(@PathVariable String id,
                                                                    @RequestBody UpsertTaskRequest request) {
         return taskService.updateById(id, taskMapper.requestToTask(request))
@@ -61,6 +70,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('MANAGER')")
     public Mono<ResponseEntity<Void>> deleteTaskById(@PathVariable String id) {
         return taskService.deleteById(id).then(Mono.just(ResponseEntity.noContent().build()));
     }

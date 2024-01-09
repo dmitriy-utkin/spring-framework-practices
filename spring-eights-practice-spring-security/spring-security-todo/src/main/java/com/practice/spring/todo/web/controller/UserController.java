@@ -8,9 +8,12 @@ import com.practice.spring.todo.web.model.user.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/user")
@@ -22,11 +25,13 @@ public class UserController {
     private final UpdatePublisher publisher;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER')")
     public Flux<UserResponse> getAllUsers() {
         return userService.findAll().map(userMapper::userToResponse);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER')")
     public Mono<ResponseEntity<UserResponse>> getUserById(@PathVariable String id) {
         return userService.findById(id)
                 .map(userMapper::userToResponse)
@@ -35,6 +40,7 @@ public class UserController {
     }
 
     @GetMapping("/username/{username}")
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER')")
     public Mono<ResponseEntity<UserResponse>> getUserByUsername(@PathVariable String username) {
         return userService.findByUsername(username)
                 .map(userMapper::userToResponse)
@@ -43,6 +49,7 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('MANAGER')")
     public Mono<ResponseEntity<UserResponse>> createUser(@RequestBody UpsertUserRequest request) {
         return userService.create(userMapper.requestToUser(request))
                 .map(userMapper::userToResponse)
@@ -51,7 +58,9 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<UserResponse>> updateUserById(@PathVariable String id,
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER')")
+    public Mono<ResponseEntity<UserResponse>> updateUserById(Mono<Principal> principal,
+                                                             @PathVariable String id,
                                                              @RequestBody UpsertUserRequest request) {
         return userService.updateById(id, userMapper.requestToUser(request))
                 .map(userMapper::userToResponse)
@@ -60,7 +69,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public Mono<ResponseEntity<Void>> deleteUserById(@PathVariable String id) {
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER')")
+    public Mono<ResponseEntity<Void>> deleteUserById(Mono<Principal> principal, @PathVariable String id) {
         return userService.deleteById(id).then(Mono.just(ResponseEntity.noContent().build()));
     }
 

@@ -1,5 +1,6 @@
 package com.practice.spring.todo.service.impl;
 
+import com.practice.spring.todo.exception.NotAllowedException;
 import com.practice.spring.todo.model.Task;
 import com.practice.spring.todo.model.User;
 import com.practice.spring.todo.repository.TaskRepository;
@@ -43,11 +44,15 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Mono<Task> create(Task task) {
-        task.setId(UUID.randomUUID().toString());
-        task.setCreatedAt(Instant.now());
-        task.setUpdatedAt(Instant.now());
-        return taskRepository.save(task);
+    public Mono<Task> create(Task task, String currentUsername) {
+        return userService.findByUsername(currentUsername)
+                .flatMap(author -> {
+                    task.setAuthorId(author.getId());
+                    task.setId(UUID.randomUUID().toString());
+                    task.setCreatedAt(Instant.now());
+                    task.setUpdatedAt(Instant.now());
+                    return taskRepository.save(task);
+                });
     }
 
     @Override
