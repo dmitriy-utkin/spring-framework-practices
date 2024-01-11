@@ -8,6 +8,7 @@ import java.util.List;
 public interface UserService {
 
     List<User> findAll(FindAllSettings findAllSettings);
+    List<User> findAll();
     User findById(Long id);
     User save(User user);
     List<User> saveAll(List<User> users);
@@ -15,7 +16,6 @@ public interface UserService {
     void deleteById(Long id);
     void deleteByIds(List<Long> ids);
     Long count();
-    boolean existsByName(String name);
-    User findByName(String name);
-    User saveWithoutPrivilegeValidation(User user);
+    boolean existsByUsername(String username);
+    User findByUsername(String username);
 }

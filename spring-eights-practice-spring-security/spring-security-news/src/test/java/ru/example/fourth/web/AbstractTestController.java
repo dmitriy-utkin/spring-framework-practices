@@ -70,7 +70,7 @@ public abstract class AbstractTestController {
 
     protected UserResponse createUserResponse(Long id) {
         return UserResponse.builder()
-                .name("user" + id)
+                .username("user" + id)
                 .email("email" + id + "@email.com")
                 .build();
     }

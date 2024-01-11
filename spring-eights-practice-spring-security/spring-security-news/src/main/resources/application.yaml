@@ -14,14 +14,11 @@ spring:
 
 app:
   validation:
-    enable: false
-  user-settings:
-    userName: admin
-    userHeader: X-App-User
+    enable: true
 
   generic-data:
-    enable: true
-    multiplier: 3
+    enable: false
+    multiplier: 1
     newsDataPath: src/main/resources/data/news-data-set.json
     usersDataPath: src/main/resources/data/users-data-set.json
     commentsDataPath: src/main/resources/data/comments-data-set.json

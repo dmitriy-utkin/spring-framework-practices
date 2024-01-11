@@ -1,6 +1,5 @@
 package ru.example.news.service.impl;
 
-import ru.example.news.aop.IdLogger;
 import ru.example.news.aop.PrivilegeValidation;
 import ru.example.news.exception.EntityNotFoundException;
 import ru.example.news.model.News;
@@ -28,7 +27,11 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    @IdLogger
+    public List<News> findAll() {
+        return newsRepository.findAll();
+    }
+
+    @Override
     public News findById(Long id) {
         return newsRepository.findById(id)
                 .orElseThrow(
@@ -36,14 +39,12 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    @IdLogger
     public News save(News news) {
         return newsRepository.save(news);
     }
 
     @Override
     @PrivilegeValidation
-    @IdLogger
     public News update(News news) {
         News existedNews = findById(news.getId());
         BeanUtils.copyNonNullProperties(news, existedNews);

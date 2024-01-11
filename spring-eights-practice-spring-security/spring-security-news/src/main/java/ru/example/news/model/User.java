@@ -32,9 +32,12 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @ElementCollection(targetClass = RoleType.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "roles", nullable = false)
+    @Enumerated(EnumType.STRING)
     @Builder.Default
-    private Set<Role> roles = new HashSet<>();
+    private Set<RoleType> roles = new HashSet<>();
 
     @ToString.Exclude
     @Builder.Default

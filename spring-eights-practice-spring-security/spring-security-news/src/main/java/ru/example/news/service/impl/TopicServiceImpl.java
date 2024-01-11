@@ -1,6 +1,5 @@
 package ru.example.news.service.impl;
 
-import ru.example.news.aop.IdLogger;
 import ru.example.news.aop.PrivilegeValidation;
 import ru.example.news.exception.EntityNotFoundException;
 import ru.example.news.model.Topic;
@@ -27,7 +26,11 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    @IdLogger
+    public List<Topic> findAll() {
+        return topicRepository.findAll();
+    }
+
+    @Override
     public Topic findById(Long id) {
         return topicRepository.findById(id)
                 .orElseThrow(
@@ -35,13 +38,12 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    @IdLogger
+    @PrivilegeValidation
     public Topic save(Topic topic) {
         return topicRepository.save(topic);
     }
 
     @Override
-    @IdLogger
     @PrivilegeValidation
     public Topic update(Topic topic) {
         Topic existedTopic = findById(topic.getId());

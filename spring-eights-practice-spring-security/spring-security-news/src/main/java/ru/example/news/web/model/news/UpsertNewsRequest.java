@@ -26,6 +26,4 @@ public class UpsertNewsRequest {
     @Size(min = 2, max = 40, message = "News topic length should be between 2 and 40 characters")
     private String topic;
 
-    @JsonIgnore
-    private Long userId;
 }

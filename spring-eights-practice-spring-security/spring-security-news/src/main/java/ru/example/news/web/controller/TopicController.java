@@ -1,5 +1,6 @@
 package ru.example.news.web.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import ru.example.news.mapper.TopicMapper;
 import ru.example.news.model.Topic;
 import ru.example.news.service.TopicService;
@@ -40,10 +41,22 @@ public class TopicController {
             }
     )
     @GetMapping
-    public ResponseEntity<TopicListResponse> findAll(@RequestBody @Valid FindAllSettings findAllSettings) {
+    @RequestMapping("/filter")
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
+    public ResponseEntity<TopicListResponse> findAllWithFilter(@RequestBody @Valid FindAllSettings findAllSettings) {
         return ResponseEntity.ok(
                 topicMapper.topicListToTopicListResponse(
                         topicService.findAll(findAllSettings)
+                )
+        );
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
+    public ResponseEntity<TopicListResponse> findAll() {
+        return ResponseEntity.ok(
+                topicMapper.topicListToTopicListResponse(
+                        topicService.findAll()
                 )
         );
     }
@@ -68,6 +81,7 @@ public class TopicController {
             )
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
     public ResponseEntity<TopicResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(
                 topicMapper.topicToTopicResponse(
@@ -90,6 +104,7 @@ public class TopicController {
             )
     })
     @PostMapping
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public ResponseEntity<SimpleTopicResponse> create(@RequestBody @Valid UpsertTopicRequest request) {
         Topic newTopic = topicService.save(topicMapper.requestToTopic(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -124,6 +139,7 @@ public class TopicController {
             )
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public ResponseEntity<SimpleTopicResponse> update(@PathVariable Long id,
                                                 @Valid @RequestBody UpsertTopicRequest request) {
         Topic updatedTopic = topicService.update(topicMapper.requsetToTopic(id, request));
@@ -154,6 +170,7 @@ public class TopicController {
             )
     })
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         topicService.deleteById(id);
         return ResponseEntity.noContent().build();

@@ -1,8 +1,6 @@
 package ru.example.news.mapper;
 
 import ru.example.news.model.Comment;
-import com.example.fourth.web.model.comment.*;
-import com.example.security.web.model.comment.*;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -14,9 +12,9 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CommentMapper {
 
-    Comment requestToComment(UpsertCommentRequest request);
+    Comment requestToComment(UpsertCommentRequest request, String username);
 
-    Comment requestToComment(Long id, UpsertCommentRequest request);
+    Comment requestToComment(Long id, UpsertCommentRequest request, String username);
 
     SimpleCommentResponse commentToSimpleCommentResponse(Comment comment);
 

@@ -1,5 +1,6 @@
 package ru.example.news.web.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import ru.example.news.mapper.UserMapper;
 import ru.example.news.model.User;
 import ru.example.news.service.UserService;
@@ -38,11 +39,22 @@ public class UserController {
                     @Content(schema = @Schema(implementation = UserListResponse.class), mediaType = "application/json")
             }
     )
-    @GetMapping
-    public ResponseEntity<UserListResponse> findAll(@RequestBody @Valid FindAllSettings findAllSettings) {
+    @GetMapping("/filter")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<UserListResponse> findAllWithFilter(@RequestBody @Valid FindAllSettings findAllSettings) {
         return ResponseEntity.ok(
                 userMapper.userListToUserListResponse(
                         userService.findAll(findAllSettings)
+                )
+        );
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<UserListResponse> findAll() {
+        return ResponseEntity.ok(
+                userMapper.userListToUserListResponse(
+                        userService.findAll()
                 )
         );
     }
@@ -67,6 +79,7 @@ public class UserController {
             )
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(
                 userMapper.userToUserResponse(
@@ -102,6 +115,7 @@ public class UserController {
             )
     })
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserResponse> create(@RequestBody @Valid UpsertUserRequest request) {
         User newUser = userService.save(userMapper.requstToUser(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(userMapper.userToUserResponse(newUser));
@@ -134,9 +148,10 @@ public class UserController {
             )
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
     public ResponseEntity<UserResponse> update(@RequestBody @Valid UpsertUserRequest request,
                                                @PathVariable("id") Long clientId) {
-        User updatedClient = userService.update(userMapper.requsetToUser(clientId, request));
+        User updatedClient = userService.update(userMapper.requestToUser(clientId, request));
         return ResponseEntity.ok(
                 userMapper.userToUserResponse(updatedClient)
         );
@@ -166,6 +181,7 @@ public class UserController {
             )
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         userService.deleteById(id);
         return ResponseEntity.noContent().build();

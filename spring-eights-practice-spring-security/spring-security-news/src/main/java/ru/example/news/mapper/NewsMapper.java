@@ -16,9 +16,9 @@ import java.util.List;
         TopicMapper.class})
 public interface NewsMapper {
 
-    News requestToNews(UpsertNewsRequest request);
+    News requestToNews(UpsertNewsRequest request, String username);
 
-    News requestToNews(Long id, UpsertNewsRequest request);
+    News requestToNews(Long id, UpsertNewsRequest request, String username);
 
     NewsResponse newsToNewsResponse(News news);
 

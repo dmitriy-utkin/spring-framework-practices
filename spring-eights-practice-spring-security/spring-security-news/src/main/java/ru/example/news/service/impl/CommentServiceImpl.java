@@ -1,6 +1,5 @@
 package ru.example.news.service.impl;
 
-import ru.example.news.aop.IdLogger;
 import ru.example.news.aop.PrivilegeValidation;
 import ru.example.news.exception.EntityNotFoundException;
 import ru.example.news.model.Comment;
@@ -28,7 +27,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @IdLogger
+    public List<Comment> findAll() {
+        return commentRepository
+                .findAll();
+    }
+
+    @Override
     public Comment findById(Long id) {
         return commentRepository.findById(id)
                 .orElseThrow(
@@ -36,14 +40,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @IdLogger
     public Comment save(Comment comment) {
         return commentRepository.save(comment);
     }
 
     @Override
     @PrivilegeValidation
-    @IdLogger
     public Comment update(Comment comment) {
         Comment existedComment = findById(comment.getId());
         BeanUtils.copyNonNullProperties(comment, existedComment);

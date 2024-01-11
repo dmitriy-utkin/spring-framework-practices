@@ -2,8 +2,8 @@ package ru.example.news.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.example.news.model.Role;
 import ru.example.news.model.User;
 
 import java.util.Collection;
@@ -15,7 +15,9 @@ public class AppUserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles().stream().map(Role::toAuthority).toList();
+        return user.getRoles().stream().map(
+                r -> new SimpleGrantedAuthority(r.name())
+        ).toList();
     }
 
     @Override

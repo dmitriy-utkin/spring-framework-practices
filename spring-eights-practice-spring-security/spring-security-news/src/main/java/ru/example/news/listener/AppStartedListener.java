@@ -1,14 +1,13 @@
 package ru.example.news.listener;
 
-import ru.example.news.configuration.AppUserConfig;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.example.news.configuration.GenericDataConfig;
-import ru.example.news.model.Comment;
-import ru.example.news.model.News;
-import ru.example.news.model.User;
-import ru.example.news.service.CommentService;
-import ru.example.news.service.NewsService;
-import ru.example.news.service.TopicService;
-import ru.example.news.service.UserService;
+import ru.example.news.model.*;
+import ru.example.news.repository.CommentRepository;
+import ru.example.news.repository.NewsRepository;
+import ru.example.news.repository.TopicRepository;
+import ru.example.news.repository.UserRepository;
 import ru.example.news.utils.JsonUtil;
 import ru.example.news.utils.model.JsonComments;
 import ru.example.news.utils.model.JsonNews;
@@ -17,7 +16,6 @@ import ru.example.news.utils.model.PreparedJsonData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -28,35 +26,18 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-@Profile("prod")
+@ConditionalOnProperty(prefix = "app.generic-data", name = "enable", havingValue = "true")
 public class AppStartedListener {
 
     private final GenericDataConfig dataConfig;
-    private final UserService userService;
-    private final NewsService newsService;
-    private final TopicService topicService;
-    private final CommentService commentService;
-    private final AppUserConfig appUserConfig;
+    private final UserRepository userRepository;
+    private final NewsRepository newsRepository;
+    private final CommentRepository commentRepository;
+    private final TopicRepository topicRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @EventListener(ApplicationStartedEvent.class)
     @Order(1)
-    public void createAdminUserIfNotExists() {
-        log.info("AppStartedListener -> createAdminUserIfNotExists was started");
-        User admin;
-        if (!userService.existsByName("admin")) {
-            admin = userService.saveWithoutPrivilegeValidation(User.builder()
-                            .username("admin")
-                            .email("admin@admin.ru")
-                            .build());
-        } else {
-            admin = userService.findByName("admin");
-        }
-        log.info("Admin ID {}", admin.getId());
-    }
-
-
-    @EventListener(ApplicationStartedEvent.class)
-    @Order(2)
     public void uploadDataToDatabase() {
         if (dataConfig.isEnable() && isEmptyDatabase()) {
             log.info("AppStartedListener -> uploadDataToDatabase was started");
@@ -66,22 +47,7 @@ public class AppStartedListener {
             List<Comment> savedComments = saveComments(savedUsers, savedNews, data.getJsonComments());
 
             log.info("Was saved: -> {} users; -> {} news; -> {} topics; -> {} comments",
-                    savedUsers.size(), savedNews.size(), topicService.count(), savedComments.size());
-        }
-    }
-
-    @EventListener(ApplicationStartedEvent.class)
-    @Order(3)
-    public void uploadAppUserToDatabase() {
-        log.info("AppStartedListener -> uploadAppUserToDatabase was started");
-        if (!userService.existsByName(appUserConfig.getUserName())) {
-            User savedUser = userService.saveWithoutPrivilegeValidation(User.builder()
-                    .username(appUserConfig.getUserName())
-                    .email("default")
-                    .build());
-            log.info("Saved app user: {}", savedUser);
-        } else {
-            log.info("User {} already exists", appUserConfig.getUserName());
+                    savedUsers.size(), savedNews.size(), topicRepository.count(), savedComments.size());
         }
     }
 
@@ -101,7 +67,7 @@ public class AppStartedListener {
 
         for (int i = 0; i < multiplier; i++) {
             savedComments.addAll(jsonComments.stream()
-                    .map(c -> commentService.save(Comment.builder()
+                    .map(c -> commentRepository.save(Comment.builder()
                             .comment(c.getComment())
                             .user(savedUsers.get(rn.nextInt(maxUsers - min + 1)))
                             .news(savedNews.get(rn.nextInt(maxNews - min + 1)))
@@ -114,14 +80,29 @@ public class AppStartedListener {
 
 
     private boolean isEmptyDatabase() {
-        return (newsService.count() + topicService.count() + commentService.count()) == 0;
+        return (newsRepository.count() + topicRepository.count() + commentRepository.count()) == 0;
     }
 
     private List<User> saveAllUsersFromPreparedList(List<JsonUser> jsonUserList) {
         List<User> users = jsonUserList.stream()
-                .map(u -> User.builder().username(u.getName()).email(u.getEmail()).build())
-                .toList();
-        return userService.saveAll(users);
+                .map(u -> User.builder()
+                        .username(u.getName())
+                        .email(u.getEmail())
+                        .password(passwordEncoder.encode("pass"))
+                        .roles(getRandomRole())
+                        .build()
+                ).toList();
+        return userRepository.saveAll(users);
+    }
+
+    private Set<RoleType> getRandomRole() {
+        List<RoleType> roles = new ArrayList<>(List.of(
+                RoleType.ROLE_USER,
+                RoleType.ROLE_ADMIN,
+                RoleType.ROLE_MODERATOR
+        ));
+        Collections.shuffle(roles);
+        return Collections.singleton(roles.get(0));
     }
 
     private List<News> saveNewsAndTopics(List<User> savedUsers, List<JsonNews> jsonNewsList) {
@@ -141,12 +122,20 @@ public class AppStartedListener {
 
     private List<News> saveNewsWithLinkToUserAndTopics(User user, List<JsonNews> jsonNews) {
         return jsonNews.stream()
-                .map(n -> newsService.save(News.builder()
-                        .topic(topicService.getOrCreateTopic(n.getTopic(), true))
-                        .body(n.getBody())
-                        .user(user)
-                        .title(n.getTitle())
-                        .build())
+                .map(n -> {
+                    Topic topic;
+                    if (topicRepository.existsByTopic(n.getTopic())) {
+                        topic = topicRepository.findByTopic(n.getTopic()).get();
+                    } else {
+                        topic = topicRepository.save(Topic.builder().topic(n.getTopic()).build());
+                    }
+                    return newsRepository.save(News.builder()
+                                    .topic(topic)
+                                    .body(n.getBody())
+                                    .user(user)
+                                    .title(n.getTitle())
+                                    .build());
+                    }
                 ).collect(Collectors.toList());
     }
 }

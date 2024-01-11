@@ -1,6 +1,6 @@
 package ru.example.news.service.impl;
 
-import ru.example.news.aop.IdLogger;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.example.news.aop.PrivilegeValidation;
 import ru.example.news.exception.EntityNotFoundException;
 import ru.example.news.exception.UserAlreadyExistsException;
@@ -20,6 +20,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> findAll(FindAllSettings findAllSettings) {
@@ -27,7 +28,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @IdLogger
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    @PrivilegeValidation
     public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(
@@ -35,20 +41,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @PrivilegeValidation
-    @IdLogger
     public User save(User user) {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new UserAlreadyExistsException("User with name " + user.getUsername() + " is already exists");
         }
-        return userRepository.save(user);
-    }
-
-    @Override
-    public User saveWithoutPrivilegeValidation(User user) {
-        if (userRepository.existsByUsername(user.getUsername())) {
-            throw new UserAlreadyExistsException("User with name " + user.getUsername() + " is already exists");
-        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -59,7 +56,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @PrivilegeValidation
-    @IdLogger
     public User update(User user) {
         User existedUser = findById(user.getId());
         BeanUtils.copyNonNullProperties(user, existedUser);
@@ -86,12 +82,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean existsByName(String name) {
+    public boolean existsByUsername(String name) {
         return userRepository.existsByUsername(name);
     }
 
     @Override
-    public User findByName(String name) {
+    public User findByUsername(String name) {
         return userRepository.findByUsername(name)
                 .orElseThrow(() -> new EntityNotFoundException("User with name \"" + name + "\" not found"));
     }

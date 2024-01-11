@@ -1,8 +1,6 @@
 package ru.example.news.mapper;
 
-import ru.example.news.configuration.AppUserConfig;
 import ru.example.news.model.News;
-import ru.example.news.model.User;
 import ru.example.news.service.CommentService;
 import ru.example.news.service.NewsService;
 import ru.example.news.service.TopicService;
@@ -27,27 +25,21 @@ public abstract class NewsMapperDelegate implements NewsMapper {
     private CommentMapper commentMapper;
 
     @Autowired
-    private AppUserConfig appUserConfig;
-
-    @Autowired
     private CommentService commentService;
 
     @Override
-    public News requestToNews(UpsertNewsRequest request) {
-        User user = request.getUserId() == null ? userService.findByName(appUserConfig.getUserName()) :
-                userService.findById(request.getUserId());
+    public News requestToNews(UpsertNewsRequest request, String username) {
         return News.builder()
-                .title(appUserConfig.getUserName().equals("admin") ? "(Upd by admin) " + request.getTitle() : request.getTitle())
+                .title(request.getTitle())
                 .body(request.getBody())
-                .user(user)
+                .user(userService.findByUsername(username))
                 .topic(topicService.getOrCreateTopic(request.getTopic(), true))
                 .build();
     }
 
     @Override
-    public News requestToNews(Long id, UpsertNewsRequest request) {
-        request.setUserId(newsService.findById(id).getUser().getId());
-        News news = requestToNews(request);
+    public News requestToNews(Long id, UpsertNewsRequest request, String username) {
+        News news = requestToNews(request, username);
         news.setId(id);
         return news;
     }

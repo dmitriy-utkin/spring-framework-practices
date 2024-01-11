@@ -24,10 +24,10 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "news_title")
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "news_body", columnDefinition = "TEXT")
+    @Column(name = "body", columnDefinition = "TEXT")
     private String body;
 
     @ManyToOne

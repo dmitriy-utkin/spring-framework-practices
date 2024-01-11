@@ -1,9 +1,11 @@
 package ru.example.news.web.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import ru.example.news.mapper.CommentMapper;
 import ru.example.news.model.Comment;
 import ru.example.news.service.CommentService;
-import com.example.fourth.web.model.comment.*;
 import ru.example.news.web.model.comment.CommentResponse;
 import ru.example.news.web.model.comment.SimpleCommentListResponse;
 import ru.example.news.web.model.defaults.ErrorResponse;
@@ -40,10 +42,22 @@ public class CommentController {
             }
     )
     @GetMapping
-    public ResponseEntity<SimpleCommentListResponse> findAll(@RequestBody @Valid FindAllSettings findAllSettings) {
+    @RequestMapping("/filter")
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
+    public ResponseEntity<SimpleCommentListResponse> findAllWithFilter(@RequestBody @Valid FindAllSettings findAllSettings) {
         return ResponseEntity.ok(
                 commentMapper.commentListToSimpleCommentListResponse(
                         commentService.findAll(findAllSettings)
+                )
+        );
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
+    public ResponseEntity<SimpleCommentListResponse> findAll() {
+        return ResponseEntity.ok(
+                commentMapper.commentListToSimpleCommentListResponse(
+                        commentService.findAll()
                 )
         );
     }
@@ -68,6 +82,7 @@ public class CommentController {
             )
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
     public ResponseEntity<CommentResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(
                 commentMapper.commentToCommentResponse(
@@ -90,8 +105,10 @@ public class CommentController {
             )
     })
     @PostMapping
-    public ResponseEntity<CommentResponse> create(@Valid @RequestBody UpsertCommentRequest request) {
-        Comment newComment = commentService.save(commentMapper.requestToComment(request));
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
+    public ResponseEntity<CommentResponse> create(@AuthenticationPrincipal UserDetails userDetails,
+                                                  @Valid @RequestBody UpsertCommentRequest request) {
+        Comment newComment = commentService.save(commentMapper.requestToComment(request, userDetails.getUsername()));
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 commentMapper.commentToCommentResponse(newComment)
         );
@@ -124,9 +141,11 @@ public class CommentController {
             )
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
     public ResponseEntity<CommentResponse> update(@PathVariable Long id,
-                                                        @Valid @RequestBody UpsertCommentRequest request) {
-        Comment updatedComment = commentService.update(commentMapper.requestToComment(id, request));
+                                                  @Valid @RequestBody UpsertCommentRequest request,
+                                                  @AuthenticationPrincipal UserDetails userDetails) {
+        Comment updatedComment = commentService.update(commentMapper.requestToComment(id, request, userDetails.getUsername()));
         return ResponseEntity.ok(commentMapper.commentToCommentResponse(updatedComment));
     }
 
@@ -154,6 +173,7 @@ public class CommentController {
             )
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         commentService.deleteById(id);
         return ResponseEntity.noContent().build();

@@ -9,6 +9,7 @@ import java.util.List;
 public interface CommentService {
 
     List<Comment> findAll(FindAllSettings findAllSettings);
+    List<Comment> findAll();
     Comment findById(Long id);
     Comment save(Comment comment);
 
