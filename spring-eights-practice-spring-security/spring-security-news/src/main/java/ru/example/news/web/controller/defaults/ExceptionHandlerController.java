@@ -1,5 +1,6 @@
 package ru.example.news.web.controller.defaults;
 
+import org.springframework.security.access.AccessDeniedException;
 import ru.example.news.exception.EntityNotFoundException;
 import ru.example.news.exception.IllegalArguments;
 import ru.example.news.exception.NotAllowedChangeRequestException;
@@ -60,6 +61,11 @@ public class ExceptionHandlerController {
                 .toList();
         String errorMessage = String.join("; ", errorMessages);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(errorMessage));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> accessDenied(AccessDeniedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(e.getMessage()));
     }
 
 }

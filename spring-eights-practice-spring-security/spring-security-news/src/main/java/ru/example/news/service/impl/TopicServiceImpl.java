@@ -1,6 +1,7 @@
 package ru.example.news.service.impl;
 
 import ru.example.news.aop.PrivilegeValidation;
+import ru.example.news.aop.ValidationType;
 import ru.example.news.exception.EntityNotFoundException;
 import ru.example.news.model.Topic;
 import ru.example.news.repository.TopicRepository;
@@ -12,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Locale;
 
 @RequiredArgsConstructor
 @Service
@@ -38,13 +38,12 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    @PrivilegeValidation
+    @PrivilegeValidation(type = ValidationType.TOPIC_SAVE)
     public Topic save(Topic topic) {
         return topicRepository.save(topic);
     }
 
     @Override
-    @PrivilegeValidation
     public Topic update(Topic topic) {
         Topic existedTopic = findById(topic.getId());
         BeanUtils.copyNonNullProperties(topic, existedTopic);
@@ -52,7 +51,6 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    @PrivilegeValidation
     public void deleteById(Long id) {
         if (!topicRepository.existsById(id)) {
             throw new EntityNotFoundException("Topic with ID " + id + " not found");
@@ -80,14 +78,4 @@ public class TopicServiceImpl implements TopicService {
         return topicRepository.findByTopic(topic).orElse(null);
     }
 
-    @Override
-    public Topic getOrCreateTopic(String topic, boolean withNullOption) {
-        if (withNullOption && topic == null) { topic = "default"; }
-        topic = topic.toLowerCase(Locale.ROOT);
-        Topic existedTopic = findByTopic(topic);
-        if (existedTopic == null) {
-            return save(Topic.builder().topic(topic).build());
-        }
-        return existedTopic;
-    }
 }

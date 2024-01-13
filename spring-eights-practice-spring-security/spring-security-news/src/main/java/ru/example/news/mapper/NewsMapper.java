@@ -13,12 +13,12 @@ import java.util.List;
 
 @DecoratedWith(NewsMapperDelegate.class)
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,  uses = {CommentMapper.class,
-        TopicMapper.class})
+        TopicMapper.class, UserMapper.class})
 public interface NewsMapper {
 
-    News requestToNews(UpsertNewsRequest request, String username);
+    News requestToNews(UpsertNewsRequest request);
 
-    News requestToNews(Long id, UpsertNewsRequest request, String username);
+    News requestToNews(Long id, UpsertNewsRequest request);
 
     NewsResponse newsToNewsResponse(News news);
 

@@ -1,4 +1,4 @@
-# SPRING COURSE SEVENTH PRACTICE
+# SPRING COURSE EIGHT (8.2) PRACTICE
 
 New features: reactive programming paradigm with using Mono/Flux, MongoDb.
 ___
@@ -7,7 +7,54 @@ Good day to everyone! :wave:
 
 ___
 
-Practice 7th tasks:
+## Practice #8 tasks:
+
+- Implementation of Security service to #4 practice.
+
+___
+___
+## New features:
+Spring Security implementation and the following rules for 3 roles (ROLE_USER, ROLE_ADMIN, ROLE_MODERATOR):
+
+### UserController
+
+#### ROLE_USER can:
+
+- Get all or exact user by id/username
+- Update user`s info
+- Delete user
+
+#### ROLE_MANAGER can:
+
+- Get all or exact user by id/username
+- Update user`s info
+- Delete user
+- Create new user
+
+___
+
+### TaskController
+
+#### ROLE_USER can:
+
+- Get all or exact task by id
+- Add observers to task
+
+#### ROLE_MANAGER can:
+
+- Get all or exact task by id
+- Add observers to task
+- Create task
+- Delete task
+- Update task
+
+___
+___
+
+## README.md from the 7th practice and main info:
+
+
+## Practice 7th tasks:
 * Introduction to reactive programming
 * Using Mono and Flux in the controllers
 * Creation STREAM for new data (based on ServerSentEvent, reactive programming)

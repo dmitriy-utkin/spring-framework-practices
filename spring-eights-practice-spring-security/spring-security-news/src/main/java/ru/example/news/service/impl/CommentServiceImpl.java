@@ -1,11 +1,13 @@
 package ru.example.news.service.impl;
 
 import ru.example.news.aop.PrivilegeValidation;
+import ru.example.news.aop.ValidationType;
 import ru.example.news.exception.EntityNotFoundException;
 import ru.example.news.model.Comment;
 import ru.example.news.model.News;
 import ru.example.news.repository.CommentRepository;
 import ru.example.news.service.CommentService;
+import ru.example.news.service.UserService;
 import ru.example.news.utils.BeanUtils;
 import ru.example.news.web.model.defaults.FindAllSettings;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
+    private final UserService userService;
 
     @Override
     public List<Comment> findAll(FindAllSettings findAllSettings) {
@@ -40,12 +43,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment save(Comment comment) {
+    public Comment save(Comment comment, String username) {
+        comment.setUser(userService.findByUsername(username));
         return commentRepository.save(comment);
     }
 
     @Override
-    @PrivilegeValidation
+    @PrivilegeValidation(type = ValidationType.COMMENTS_UPDATE)
     public Comment update(Comment comment) {
         Comment existedComment = findById(comment.getId());
         BeanUtils.copyNonNullProperties(comment, existedComment);
@@ -53,7 +57,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @PrivilegeValidation
+    @PrivilegeValidation(type = ValidationType.COMMENTS_DELETE)
     public void deleteById(Long id) {
         if (!commentRepository.existsById(id)) {
             throw new EntityNotFoundException("Comment with ID " + id + " not found");

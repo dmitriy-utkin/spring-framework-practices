@@ -20,17 +20,16 @@ public abstract class CommentMapperDelegate implements CommentMapper {
     private CommentService commentService;
 
     @Override
-    public Comment requestToComment(UpsertCommentRequest request, String username) {
+    public Comment requestToComment(UpsertCommentRequest request) {
         return Comment.builder()
                 .comment(request.getComment())
-                .user(userService.findByUsername(username))
                 .news(newsService.findById(request.getNewsId()))
                 .build();
     }
 
     @Override
-    public Comment requestToComment(Long id, UpsertCommentRequest request, String username) {
-        Comment comment = requestToComment(request, username);
+    public Comment requestToComment(Long id, UpsertCommentRequest request) {
+        Comment comment = requestToComment(request);
         comment.setId(id);
         return comment;
     }

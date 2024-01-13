@@ -17,5 +17,4 @@ public interface TopicService {
     Long count();
     boolean existsByTopic(String topic);
     Topic findByTopic(String topic);
-    Topic getOrCreateTopic(String topic, boolean withNullOption);
 }

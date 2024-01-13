@@ -11,8 +11,7 @@ public interface CommentService {
     List<Comment> findAll(FindAllSettings findAllSettings);
     List<Comment> findAll();
     Comment findById(Long id);
-    Comment save(Comment comment);
-
+    Comment save(Comment comment, String username);
     Comment update(Comment comment);
     void deleteById(Long id);
     void deleteByIds(List<Long> ids);

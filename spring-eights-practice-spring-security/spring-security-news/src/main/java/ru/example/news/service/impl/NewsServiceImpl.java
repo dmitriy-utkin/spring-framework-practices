@@ -1,11 +1,13 @@
 package ru.example.news.service.impl;
 
 import ru.example.news.aop.PrivilegeValidation;
+import ru.example.news.aop.ValidationType;
 import ru.example.news.exception.EntityNotFoundException;
 import ru.example.news.model.News;
 import ru.example.news.repository.NewsRepository;
 import ru.example.news.repository.NewsSpecification;
 import ru.example.news.service.NewsService;
+import ru.example.news.service.UserService;
 import ru.example.news.utils.BeanUtils;
 import ru.example.news.web.model.defaults.FindAllSettings;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.List;
 public class NewsServiceImpl implements NewsService {
 
     private final NewsRepository newsRepository;
+    private final UserService userService;
 
     @Override
     public List<News> findAll(FindAllSettings findAllSettings) {
@@ -39,12 +42,13 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public News save(News news) {
+    public News save(News news, String username) {
+        news.setUser(userService.findByUsername(username));
         return newsRepository.save(news);
     }
 
     @Override
-    @PrivilegeValidation
+    @PrivilegeValidation(type = ValidationType.NEWS_UPDATE)
     public News update(News news) {
         News existedNews = findById(news.getId());
         BeanUtils.copyNonNullProperties(news, existedNews);
@@ -52,7 +56,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    @PrivilegeValidation
+    @PrivilegeValidation(type = ValidationType.NEWS_DELETE)
     public void deleteById(Long id) {
         if (!newsRepository.existsById(id)) {
             throw new EntityNotFoundException("News with ID " + id + " not found");

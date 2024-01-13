@@ -10,5 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class SimpleCommentResponse {
+
+    private Long id;
     private String comment;
 }

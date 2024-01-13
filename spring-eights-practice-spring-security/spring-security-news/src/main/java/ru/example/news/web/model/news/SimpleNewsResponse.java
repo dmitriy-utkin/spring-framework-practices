@@ -10,8 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class SimpleNewsResponse {
+
+    private Long id;
     private String title;
     private String body;
     private String topic;
+    private Long userId;
     private int commentCount;
 }

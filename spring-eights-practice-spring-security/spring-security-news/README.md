@@ -1,8 +1,6 @@
-# SPRING COURSE FOURTH PRACTICE
+# SPRING COURSE EIGHT (8.1) PRACTICE
 
-New features: AOP - aspect for validation user input with admin level of privilege, OpenAPI documentation, Spring Test, Web interceptors, Mapping with help of MapStruct to transfer `Entities <-> DTOs`, JPA specifications 
-
-Also here you can find: Docker-compose for PostgreSQL, Spring-boot for WEB (MVC), and a little EventListening
+New features: Spring Security 
 
 ___
 
@@ -12,9 +10,117 @@ Hello everyone :wave:
 
 ### _You can find the controller full documentation on [OpenAPI web client](http://localhost:8080/swagger-ui/index.html) when application is started_
 
+## Practice #8 tasks:
+
+- Implementation of Security service to #4 practice.
+
+___
+___
+## New features:
+Spring Security implementation and the following rules for 3 roles (ROLE_USER, ROLE_ADMIN, ROLE_MODERATOR).
+All internal validations (like check is it an admin/moderator or not, is it an owner of this entity) realised with AOP.
+
+### UserController
+
+#### ROLE_USER can:
+
+- Get info about user by ID (but only about yourself)
+- Update information about user (but only yourself)
+- Delete user`s account (but only yourself)
+
+#### ROLE_ADMIN can:
+
+- Get information about all users
+- Get info about user by ID
+- Update information about user
+- Delete user`s account
+- Create new user
+
+#### ROLE_MODERATOR can:
+
+- Get info about user by ID
+- Update information about user
+- Delete user`s account
+
+___
+
+### NewsController
+
+#### ROLE_USER can:
+
+- Get info about all news or exact news by id
+- Create news
+- Update news (but only the news that was created by yourself)
+- Delete news (but only the news that was created by yourself)
+
+#### ROLE_ADMIN can:
+
+- Get info about all news or exact news by id
+- Create news
+- Update news (but only the news that was created by yourself)
+- Delete any news
+
+#### ROLE_MODERATOR can:
+
+- Get info about all news or exact news by id
+- Create news
+- Update news (but only the news that was created by yourself)
+- Delete any news
+
+___
+
+### TopicController
+
+#### ROLE_USER can:
+
+- Get info about all topics or exact topic by id
+
+#### ROLE_ADMIN can:
+
+- Get info about all topics or exact topic by id
+- Create new topic
+- Update existed topic
+- Delete topic by id
+
+#### ROLE_MODERATOR can:
+
+- Get info about all topics or exact topic by id
+- Create new topic
+- Update existed topic
+- Delete topic by id
+___
+
+### CommentController
+
+#### ROLE_USER can:
+
+- Create new comment
+- Get all or exact comment by id
+- Update comment (but only the comment that was created by this user)
+- Delete comment (but only the comment that was created by this user)
+
+#### ROLE_ADMIN can:
+
+- Create new comment
+- Get all or exact comment by id
+- Update comment (but only the comment that was created by this user)
+- Delete comment
+
+#### ROLE_MODERATOR can:
+
+- Create new comment
+- Get all or exact comment by id
+- Update comment (but only the comment that was created by this user)
+- Delete comment
+
+___
+___
+
+## README.md from the 4th practice and main info:
+
 ## Practice #4 tasks:
 
--  Development of REST API using Spring MVC.
+- Development of REST API using Spring MVC.
 - Validation of incoming client requests.
 - AOP (Aspect-Oriented Programming).
 - Creation of application layer for database operations using Spring Boot Data JPA.

@@ -45,7 +45,7 @@ public class NewsController {
     )
     @GetMapping
     @RequestMapping("/filter")
-    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
     public ResponseEntity<SimpleNewsListResponse> findAllWithFilter(@RequestBody @Valid FindAllSettings findAllSettings) {
         return ResponseEntity.ok(
                 newsMapper.newsListToSimpleNewsListResponse(
@@ -55,7 +55,7 @@ public class NewsController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
     public ResponseEntity<SimpleNewsListResponse> findAll() {
         return ResponseEntity.ok(
                 newsMapper.newsListToSimpleNewsListResponse(
@@ -84,7 +84,7 @@ public class NewsController {
             )
     })
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
     public ResponseEntity<NewsResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(
                 newsMapper.newsToNewsResponse(
@@ -107,10 +107,10 @@ public class NewsController {
             )
     })
     @PostMapping
-    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
     public ResponseEntity<NewsResponse> create(@AuthenticationPrincipal UserDetails userDetails,
                                                @RequestBody @Valid UpsertNewsRequest request) {
-        News newNews = newsService.save(newsMapper.requestToNews(request, userDetails.getUsername()));
+        News newNews = newsService.save(newsMapper.requestToNews(request), userDetails.getUsername());
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 newsMapper.newsToNewsResponse(newNews)
         );
@@ -143,11 +143,10 @@ public class NewsController {
             )
     })
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
     public ResponseEntity<NewsResponse> update(@PathVariable Long id,
-                                               @Valid @RequestBody UpsertNewsRequest request,
-                                               @AuthenticationPrincipal UserDetails userDetails) {
-        News updatedNews = newsService.update(newsMapper.requestToNews(id, request, userDetails.getUsername()));
+                                               @Valid @RequestBody UpsertNewsRequest request) {
+        News updatedNews = newsService.update(newsMapper.requestToNews(id, request));
         return ResponseEntity.ok(
                 newsMapper.newsToNewsResponse(updatedNews)
         );
@@ -177,7 +176,7 @@ public class NewsController {
             )
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRoles('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MODERATOR')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         newsService.deleteById(id);
         return ResponseEntity.noContent().build();

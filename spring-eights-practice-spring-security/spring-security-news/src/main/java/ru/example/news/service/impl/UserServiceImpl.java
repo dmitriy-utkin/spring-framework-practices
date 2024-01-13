@@ -2,6 +2,7 @@ package ru.example.news.service.impl;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.example.news.aop.PrivilegeValidation;
+import ru.example.news.aop.ValidationType;
 import ru.example.news.exception.EntityNotFoundException;
 import ru.example.news.exception.UserAlreadyExistsException;
 import ru.example.news.model.User;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @PrivilegeValidation
+    @PrivilegeValidation(type = ValidationType.USER_FIND_BY_ID)
     public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(
@@ -55,15 +56,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @PrivilegeValidation
+    @PrivilegeValidation(type = ValidationType.USER_UPDATE)
     public User update(User user) {
         User existedUser = findById(user.getId());
         BeanUtils.copyNonNullProperties(user, existedUser);
-        return userRepository.save(existedUser);
+        existedUser.setPassword(passwordEncoder.encode(existedUser.getPassword()));
+        return userRepository.saveAndFlush(existedUser);
     }
 
     @Override
-    @PrivilegeValidation
+    @PrivilegeValidation(type = ValidationType.USER_DELETE)
     public void deleteById(Long id) {
         if (!userRepository.existsById(id)) {
             throw new EntityNotFoundException("User with ID " + id + " not found");

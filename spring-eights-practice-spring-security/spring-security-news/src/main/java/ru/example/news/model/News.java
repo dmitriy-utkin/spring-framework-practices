@@ -41,7 +41,7 @@ public class News {
 
     @ToString.Exclude
     @Builder.Default
-    @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
     @CreationTimestamp

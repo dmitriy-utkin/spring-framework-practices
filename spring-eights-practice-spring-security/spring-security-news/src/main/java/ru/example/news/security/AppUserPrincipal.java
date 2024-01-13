@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ru.example.news.model.User;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class AppUserPrincipal implements UserDetails {
@@ -15,9 +16,9 @@ public class AppUserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles().stream().map(
-                r -> new SimpleGrantedAuthority(r.name())
-        ).toList();
+        return user.getRoles().stream()
+                .map(r -> new SimpleGrantedAuthority(r.name()))
+                .collect(Collectors.toList());
     }
 
     @Override

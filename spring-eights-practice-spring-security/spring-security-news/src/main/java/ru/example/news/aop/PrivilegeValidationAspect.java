@@ -1,31 +1,30 @@
 package ru.example.news.aop;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import ru.example.news.exception.IllegalArguments;
-import ru.example.news.exception.NotAllowedChangeRequestException;
-import ru.example.news.model.*;
-import ru.example.news.service.CommentService;
-import ru.example.news.service.NewsService;
-import ru.example.news.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import ru.example.news.exception.IllegalArguments;
+import ru.example.news.exception.NotAllowedChangeRequestException;
+import ru.example.news.model.Comment;
+import ru.example.news.model.News;
+import ru.example.news.model.RoleType;
+import ru.example.news.model.User;
+import ru.example.news.service.CommentService;
+import ru.example.news.service.NewsService;
+import ru.example.news.service.UserService;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Aspect
 @Component
@@ -43,28 +42,30 @@ public class PrivilegeValidationAspect {
     private UserService userService;
 
     @Before("@annotation(PrivilegeValidation)")
-    public void validate(JoinPoint joinPoint) {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes) requestAttributes).getRequest();
+    public void validateCredential(JoinPoint joinPoint) {
 
-        String requestedUri = httpServletRequest.getRequestURI();
-        String method = joinPoint.getSignature().getName();
-
-        ValidationType validationType = getValidationType(requestedUri, method);
-
+        ValidationType type = getValidationType(joinPoint);
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (validationType == null) {
-            throw new IllegalArguments("Unexpected request.");
-        }
-        if (!validate(validationType, userDetails.getUsername(), joinPoint.getArgs())) {
+        if (!validate(type, userDetails.getUsername(), joinPoint.getArgs())) {
             throw new NotAllowedChangeRequestException("You are not authorized for this action.");
         }
     }
 
-    private boolean validate(ValidationType validationType,
-                          String username,
-                          Object[] args) {
+    @SneakyThrows
+    private ValidationType getValidationType(JoinPoint joinPoint) {
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        Class<?>[] parameters = methodSignature.getMethod().getParameterTypes();
+        PrivilegeValidation validationAnnotation = joinPoint.getTarget().getClass()
+                .getMethod(joinPoint.getSignature().getName(), parameters)
+                .getAnnotation(PrivilegeValidation.class);
+        if (validationAnnotation != null) {
+            return validationAnnotation.type();
+        }
+        throw new IllegalArguments("Validation type is unexpected");
+    }
+
+    private boolean validate(ValidationType validationType, String username, Object[] args) {
 
         User requester = userService.findByUsername(username);
         Set<RoleType> requesterRoles = requester.getRoles();
@@ -83,13 +84,12 @@ public class PrivilegeValidationAspect {
                     return false;
                 }
             }
-
             case TOPIC_SAVE, TOPIC_DELETE, TOPIC_UPDATE -> {
                 if (isNotAdminOrModerator(requesterRoles)) {
                     return false;
                 }
             }
-                case NEWS_UPDATE, COMMENTS_UPDATE -> {
+            case NEWS_UPDATE, COMMENTS_UPDATE -> {
                 if (isNotOwnerOfEntity(validationType, objectToGetOwnerId, requester.getId())) {
                     return false;
                 }
@@ -101,53 +101,8 @@ public class PrivilegeValidationAspect {
         return true;
     }
 
-    private ValidationType getValidationType(String requestedUri, String method) {
-
-        if (requestedUri.contains("user") && method.contains("update")) {
-            return ValidationType.USER_UPDATE;
-        }
-
-        if (requestedUri.contains("user") && method.contains("delete")) {
-            return ValidationType.USER_DELETE;
-        }
-
-        if (requestedUri.contains("user") && method.contains("find")) {
-            return ValidationType.USER_FIND_BY_ID;
-        }
-
-        if (requestedUri.contains("news") && method.contains("update")) {
-            return ValidationType.NEWS_UPDATE;
-        }
-
-        if (requestedUri.contains("news") && method.contains("delete")) {
-            return ValidationType.NEWS_DELETE;
-        }
-
-        if (requestedUri.contains("comment") && method.contains("update")) {
-            return ValidationType.COMMENTS_UPDATE;
-        }
-
-        if (requestedUri.contains("comment") && method.contains("delete")) {
-            return ValidationType.COMMENTS_DELETE;
-        }
-
-        if (requestedUri.contains("topic") && method.contains("save")) {
-            return ValidationType.TOPIC_SAVE;
-        }
-
-        if (requestedUri.contains("topic") && method.contains("update")) {
-            return ValidationType.TOPIC_UPDATE;
-        }
-
-        if (requestedUri.contains("topic") && method.contains("delete")) {
-            return ValidationType.TOPIC_DELETE;
-        }
-
-        return null;
-    }
-
     private boolean isNotAdminOrModerator(Set<RoleType> requesterRoles) {
-        return !requesterRoles.contains(RoleType.ROLE_ADMIN) || !requesterRoles.contains(RoleType.ROLE_MODERATOR);
+        return !requesterRoles.stream().anyMatch(role -> role.equals(RoleType.ROLE_ADMIN) || role.equals(RoleType.ROLE_MODERATOR));
     }
 
     private boolean isNotOwnerOfEntity(ValidationType validationType,
@@ -190,7 +145,7 @@ public class PrivilegeValidationAspect {
     }
 
     @SneakyThrows
-    private static Long getOwnerIdForUpdate(Object object, boolean user, boolean news, boolean comments) {
+    private Long getOwnerIdForUpdate(Object object, boolean user, boolean news, boolean comments) {
         Class<?> clazz = object.getClass();
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
@@ -198,10 +153,13 @@ public class PrivilegeValidationAspect {
             if (user && field.getName().equals(User.Fields.id)) {
                 return (Long) field.get(object);
             }
-            if ((news || comments) &&
-                    (field.getName().equals(News.Fields.user) || field.getName().equals(Comment.Fields.user))) {
-                User userObj = (User) field.get(object);
-                return userObj.getId();
+            if (news && (field.getName().equals(News.Fields.id))) {
+                Long newsId = (Long) field.get(object);
+                return newsService.findById(newsId).getUser().getId();
+            }
+            if (comments && (field.getName().equals(Comment.Fields.id))) {
+                Long commentId = (Long) field.get(object);
+                return commentService.findById(commentId).getUser().getId();
             }
         }
         return null;
