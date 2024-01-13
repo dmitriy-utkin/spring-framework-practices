@@ -20,6 +20,14 @@ ___
 Spring Security implementation and the following rules for 3 roles (ROLE_USER, ROLE_ADMIN, ROLE_MODERATOR).
 All internal validations (like check is it an admin/moderator or not, is it an owner of this entity) realised with AOP.
 
+___
+
+### PublicController
+
+- Any user can create an account
+
+___
+
 ### UserController
 
 #### ROLE_USER can:

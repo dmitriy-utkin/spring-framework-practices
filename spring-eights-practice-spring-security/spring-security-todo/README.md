@@ -16,6 +16,14 @@ ___
 ## New features:
 Spring Security implementation and the following rules for 3 roles (ROLE_USER, ROLE_ADMIN, ROLE_MODERATOR):
 
+___
+
+### PublicController
+
+- Any user can create an account
+
+___
+
 ### UserController
 
 #### ROLE_USER can:
