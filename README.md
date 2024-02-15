@@ -90,5 +90,5 @@ Introduction to reactive prograaming and NoSQL MongoDB. This appliaction is a TO
 
 ### [Eight practice](https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-eights-practice-spring-security)
 Was implemented Spring Security features to the fourth and seventh practices
-#### [Updated 4th practice] (https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-eights-practice-spring-security/spring-security-news)
-#### [Updated 7th practice] (https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-eights-practice-spring-security/spring-security-todo)
+#### [Updated 4th practice](https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-eights-practice-spring-security/spring-security-news)
+#### [Updated 7th practice](https://github.com/dmitriy-utkin/spring-framework-practices/tree/main/spring-eights-practice-spring-security/spring-security-todo)
